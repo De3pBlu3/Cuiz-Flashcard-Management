@@ -12,7 +12,11 @@ public class DB_SetUp {
 
         File DquizFolder = new File(DquizPath);
         if (!DquizFolder.exists()) {
-            DquizFolder.mkdir();
+            if (!DquizFolder.mkdir())
+            {
+                System.out.println("Failed to create DQuiz folder");
+                return;
+            }
         }
 
         String url = "jdbc:sqlite:" + DquizFolder +"/" + fileName;
@@ -33,13 +37,6 @@ public class DB_SetUp {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        createNewDatabase("DQuiz.db");
     }
 }
 

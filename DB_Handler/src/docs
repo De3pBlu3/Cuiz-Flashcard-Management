@@ -1,0 +1,15 @@
+DB will return an object with the following properties:
+    - card id
+    - Question_content
+    - Question_answers
+    - Question_correct_answer
+    - Question_category
+    - Question_difficulty
+
+
+As in can be called with
+Card question_5 = New Card(get_Card_from_DB(id=5));
+System.println(question_5.Question_content);
+System.println(question_5.Question_answers);
+
+
