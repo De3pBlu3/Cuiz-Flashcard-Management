@@ -6,10 +6,8 @@ import java.sql.Statement;
 public class DB_CreateTables {
     public static void CreateStandardTables() {
         // SQLite connection string
-        String appdataPath = System.getenv("APPDATA");
-        String DquizPath = appdataPath + "/DQuiz";              // DQuiz database folder path in APPDATA
 
-        String url = "jdbc:sqlite:" + DquizPath +"/" + "DQuiz.db";
+        String url = "jdbc:sqlite:" + System.getenv("APPDATA") + "/DQuiz/DQuiz.db";
 
         // SQL statement for creating a new table
         String sql_create_table_cards =

@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 public class DB_SetUp {
 
-    public static void createNewDatabase(String fileName) {
+    public static void createNewDatabase() {
         // check if DQuiz folder exists in appdata
         String appdataPath = System.getenv("APPDATA");
         String DquizPath = appdataPath + "/DQuiz";              // DQuiz database folder path in APPDATA
@@ -19,10 +19,10 @@ public class DB_SetUp {
             }
         }
 
-        String url = "jdbc:sqlite:" + DquizFolder +"/" + fileName;
+        String url = "jdbc:sqlite:" + DquizFolder +"/" + "DQuiz.db";
 
         // test if database exists
-        File dbFile = new File(DquizFolder + "/" + fileName);
+        File dbFile = new File(DquizFolder + "/" + "DQuiz.db");
         if (dbFile.exists()) {
             System.out.println("Database already exists");
             return;
