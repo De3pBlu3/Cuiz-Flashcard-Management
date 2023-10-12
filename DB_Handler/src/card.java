@@ -15,8 +15,8 @@ public class card {
     int Question_correct_answer; // index of Question_answers which is the correct answer
     int Question_category; // Discrete Mathematics, Computer Science, and Computer Organisation
     int Question_difficulty; // 0 = novice 1 = intermediate 2 = expert
-
     String Question_answers_original;
+    
     public card(String card_id, String question_content, String question_answers, int question_correct_answer, int question_category, int question_difficulty) {
         this.card_id = card_id;
         this.Question_content = question_content;
