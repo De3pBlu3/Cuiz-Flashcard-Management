@@ -168,5 +168,24 @@ public class DB_CardInteract {
         }
         return null;
     }
+
+
+    public static void addCardToDB(card card_object) {
+        String sql = "INSERT INTO cards(card_id,question,answers,correct_answer_index,category,difficulty) VALUES(?,?,?,?,?,?)";
+
+        try (Connection conn = DB_ConnCreator.connect();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, card_object.card_id);
+            pstmt.setString(2, card_object.Question_content);
+            pstmt.setString(3, card_object.Question_answers_original);
+            pstmt.setInt(4, card_object.Question_correct_answer);
+            pstmt.setInt(5, card_object.Question_category);
+            pstmt.setInt(6, card_object.Question_difficulty);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
+
 

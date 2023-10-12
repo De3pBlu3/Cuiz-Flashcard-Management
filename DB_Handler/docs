@@ -3,6 +3,9 @@ Card question_5 = New Card(get_Card_from_DB(id=5));
 System.println(question_5.Question_content);
 System.println(question_5.Question_answers);
 
+
+
+Cards functions (DB_CardInteract)
 methods:                    | return type:      | parameters:
 -----------------------------------------------------------------
 amountOfCardsTotal          | int               | none
@@ -10,3 +13,11 @@ amountOfCardsWithWhere      | int               | string (where sql statement)
 returnAllCards              | array of cards    | none
 returnCardByID              | card              | string (id of card)
 returnCardsByDifficulty     | array of cards    | int    (difficulty int)
+
+
+User functions (DB_CardInteract)
+methods:                    | return type:      | parameters:
+-----------------------------------------------------------------
+loginCheck                  | bool              | user_ID, password (string)
+selectAll                   | int               | string (where sql statement)
+insert                      | none              | user_ID, password (string)
