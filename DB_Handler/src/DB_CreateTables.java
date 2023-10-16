@@ -39,7 +39,7 @@ public class DB_CreateTables {
                     "losses"	INTEGER,
                     "card_id"	TEXT,
                     "user_ID"	TEXT,
-                    FOREIGN KEY("card_id") REFERENCES "cards"("card_id"),
+                    FOREIGN KEY("card_id") REFERENCES "cards"("card_id "),
                     FOREIGN KEY("user_ID") REFERENCES "users"("user_ID")
                 );""";
 

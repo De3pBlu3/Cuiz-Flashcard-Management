@@ -9,8 +9,11 @@ public class playLoop {
 
         // we will also assume the player has chosen a game mode, and will run a different method depdning on the game mode
         // for now, we will create a random mode and call it
-        random_play();
+//        random_play();
+        DB_SetUp.createNewDatabase();
+        DB_CreateTables.CreateStandardTables();
     }
+
 
     public static void shuffle_array(card[] cards_array){
         // shuffle array
