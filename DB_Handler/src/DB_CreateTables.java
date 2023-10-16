@@ -33,7 +33,7 @@ public class DB_CreateTables {
 
         String sql_create_table_score =
                 """
-                CREATE TABLE "scores" (
+                CREATE TABLE IF NOT EXISTS "scores" (
                     "score"	INTEGER,
                     "wins"	INTEGER,
                     "losses"	INTEGER,
