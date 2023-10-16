@@ -37,4 +37,32 @@ public class card {
                 "Category: \t\t\t" + Question_category + "\n" +
                 "Difficulty: \t\t\t" + Question_difficulty + "\n";
     }
+
+    public String getCard_id() {
+        return card_id;
+    }
+
+    public String getQuestion_content() {
+        return Question_content;
+    }
+
+    public String[] getQuestion_answers_arr() {
+        return Question_answers_arr;
+    }
+
+    public int getQuestion_correct_answer() {
+        return Question_correct_answer;
+    }
+
+    public int getQuestion_category() {
+        return Question_category;
+    }
+
+    public int getQuestion_difficulty() {
+        return Question_difficulty;
+    }
+
+    public String getQuestion_answers_original() {
+        return Question_answers_original;
+    }
 }
