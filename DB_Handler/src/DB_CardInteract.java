@@ -37,6 +37,36 @@ public class DB_CardInteract {
         return 0;
     }
 
+    public static card[] allCardsIncreasingDifficulty(){
+        String sql = "SELECT card_id, question, answers, correct_answer_index, category, difficulty FROM cards ORDER BY difficulty";
+
+        int numberOfCards = amountOfCardsTotal();
+
+        try (Connection conn = DB_ConnCreator.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs == null) {
+                System.out.println("No cards in DB");
+                return null;
+            }
+
+            card[] cards = new card[numberOfCards];
+
+            int count = 0;
+            // loop through the result set
+            while (rs.next()) {
+                card row = new card(rs.getString("card_id"), rs.getString("question"), rs.getString("answers"), rs.getInt("correct_answer_index"), rs.getInt("category"), rs.getInt("difficulty"));
+                cards[count] = row;
+                count++;
+            }
+            return cards;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public static card[] returnAllCards() {
         String sql = "SELECT card_id, question, answers, correct_answer_index, category, difficulty FROM cards";
 
