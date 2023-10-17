@@ -26,19 +26,21 @@ public class Logon {
 				
 		}else {
 			//----------LOGIN------------// things to add (try again if user or password is wrong)
-			//while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
+			String user = "";
+			String pass = "";
+			while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
 				System.out.print("Username: ");
-				String user = in.nextLine();
+				user = in.nextLine();
 				System.out.print("Password: ");
-				String pass = in.nextLine();
+				pass = in.nextLine();
 			
-				if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether username and password exists
-				//DB_UserInteract.loginCheck(user, pass) = true; //ends loop
+				if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether user name and password exists
 					System.out.println("Successful login");
 				}else {
-					System.out.println("Username or password does not match"); //loop continues
+					System.out.println("Username or password does not match. Try again"); //loop continues
 				}
 			}
 		}
 	}
+}
 
