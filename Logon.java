@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 public class Logon {
 	public static void main(String[] args) {
@@ -23,10 +24,13 @@ public class Logon {
 				System.out.println("Confirm password: ");
 				String confirmPass = in.nextLine();
 
-				if (confirmPass == pass) {
-					DB_UserInteract.insert(user, pass); // new user name and password stored
+				if (Objects.equals(confirmPass, pass)) {
+					if (DB_UserInteract.insert(user, pass)){ // new user name and password stored
 					temp = true;
-					System.out.println("New user created successfully");
+					System.out.println("New user created successfully");}
+					else {
+						System.out.println("Something has gone wrong, most likely the username already exists. Try again. ");
+					}
 				}else {
 					System.out.println("Passwords do not match.. ");
 					}

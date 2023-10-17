@@ -23,7 +23,7 @@ public class DB_UserInteract {
         }
     }
 
-    public static void insert(String user_ID, String password) {
+    public static boolean insert(String user_ID, String password) {
         String sql = "INSERT INTO users(user_ID,password) VALUES(?,?)";
 
         try (Connection conn = DB_ConnCreator.connect();
@@ -33,9 +33,10 @@ public class DB_UserInteract {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
 
-
+    return true;
     }
 
     public static boolean loginCheck(String user_ID, String password) {
