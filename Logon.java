@@ -13,19 +13,28 @@ public class Logon {
 		in.nextLine();
 		if (logon == 2) {
 			
-			//----------SIGN-UP------------// things to add (confirm password?) (straight to login after?)
-			
-			System.out.print("Choose a new username: ");
-			String user = in.nextLine();
-			System.out.println("Choose a new password: ");
-			String pass = in.nextLine();
-	
-			DB_UserInteract.insert(user, pass); // new username and password stored
-			System.out.print("New user created successfully");
+			//----------SIGN-UP------------// things to add (confirm password?)
+			boolean temp = false;
+			while (temp != true) {
+				System.out.print("Choose a new username: ");
+				String user = in.nextLine();
+				System.out.println("Choose a new password: ");
+				String pass = in.nextLine();
+				System.out.println("Confirm password: ");
+				String confirmPass = in.nextLine();
+
+				if (confirmPass == pass) {
+					DB_UserInteract.insert(user, pass); // new user name and password stored
+					temp = true;
+					System.out.println("New user created successfully");
+				}else {
+					System.out.println("Passwords do not match.. ");
+					}
+				}
 		
 				
-		}else {
-			//----------LOGIN------------// things to add (try again if user or password is wrong)
+		}
+			//----------LOGIN------------//
 			String user = "";
 			String pass = "";
 			while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
@@ -40,7 +49,7 @@ public class Logon {
 					System.out.println("Username or password does not match. Try again"); //loop continues
 				}
 			}
-		}
+		
 	}
 }
 
