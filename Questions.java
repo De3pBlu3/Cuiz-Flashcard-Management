@@ -78,45 +78,7 @@ public class Questions {
 			//---------------------------------------------------------------------------------------------------------------
 			 
 	}
-	/*public static void Logon() { 
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Welcome to The quiz");
-		System.out.println("Log in (1) or Sign up (2)");
-		String logon = in.nextLine(); //Line to choose
-		if (logon == "Sign Up") {
-			//----------SIGN-UP------------// in progress
-			System.out.print("Choose a new username: ");
-			String user = in.nextLine();
-			//while (pass != confirmPass) {
-				System.out.print("Choose a new password: ");
-				String pass = in.nextLine();
-				System.out.print("Confirm password: ");
-				String confirmPass = in.nextLine();
-				if(pass == confirmPass) {
-					DB_UserInteract.insert(user, pass); // new username and password stored
-					System.out.print("New user created successfully");
-				}else {
-					System.out.print("Passwords do not match");
-				}
-			//}
-		}else {
-			//----------LOGIN------------//
-			while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
-				System.out.print("Username: ");
-				String user = in.nextLine();
-				System.out.print("Password: ");
-				String pass = in.nextLine();
-			
-				if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether username and password exists
-					DB_UserInteract.loginCheck(user, pass) = true; //ends loop
-					System.out.println("Successful login");
-				}else {
-					System.out.println("Username or password does not match"); //loop continues
-				}
-			}
-		}
-	}
+	/*
 	public static void RunQuiz() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Please choose a gamemode: ");
