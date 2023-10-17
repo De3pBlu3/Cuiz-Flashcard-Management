@@ -22,11 +22,13 @@ public class DB_ScoreInteract {
                 score++;
                 changeWins(user_id, card_id, wins, conn);
                 changeScore(user_id, card_id, score, conn);
+                changeLastPlayedValue(true, user_id, card_id, conn);
             } else {
                 // if record doesn't exist, create it, add 1 to wins, and change score by 1
                 createRecord(user_id, card_id, conn);
                 changeWins(user_id, card_id, 1, conn);
                 changeScore(user_id, card_id, 1, conn);
+                changeLastPlayedValue(true, user_id, card_id, conn);
             }
 
         } catch (SQLException e) {
@@ -54,11 +56,13 @@ public class DB_ScoreInteract {
                 score--;
                 changeLosses(user_id, card_id, losses, conn);
                 changeScore(user_id, card_id, score, conn);
+                changeLastPlayedValue(false, user_id, card_id, conn);
             } else {
                 // if record doesn't exist, create it, add 1 to losses, and change score by -1
                 createRecord(user_id, card_id, conn);
                 changeLosses(user_id, card_id, 1, conn);
                 changeScore(user_id, card_id, -1, conn);
+                changeLastPlayedValue(false, user_id, card_id, conn);
             }
 
         } catch (SQLException e) {
@@ -115,4 +119,16 @@ public class DB_ScoreInteract {
         }
     }
 
+    public static void changeLastPlayedValue(Boolean correct, String user_id, String card_id, Connection conn) {
+        String sql = "UPDATE scores SET was_correct_last_played = ? WHERE user_ID = ? AND card_id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBoolean(1, correct);
+            pstmt.setString(2, user_id);
+            pstmt.setString(3, card_id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
