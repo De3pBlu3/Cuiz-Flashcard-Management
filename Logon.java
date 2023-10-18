@@ -24,12 +24,12 @@ public class Logon {
 				System.out.println("Confirm password: ");
 				String confirmPass = in.nextLine();
 
-				if (Objects.equals(confirmPass, pass)) {
-					if (DB_UserInteract.insert(user, pass)){ // new user name and password stored
-					temp = true;
+				if (Objects.equals(confirmPass, pass)) { //tests whether the passwords  are equal
+					if (DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist
+					temp = true; // ends loop
 					System.out.println("New user created successfully");}
 					else {
-						System.out.println("Something has gone wrong, most likely the username already exists. Try again. ");
+						System.out.println("Something has gone wrong, most likely the username already exists. Try again. "); //user exists and was not stored again
 					}
 				}else {
 					System.out.println("Passwords do not match.. ");
