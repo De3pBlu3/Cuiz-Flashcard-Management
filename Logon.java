@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 public class Logon {
 	public static void main(String[] args) {
@@ -13,32 +14,46 @@ public class Logon {
 		in.nextLine();
 		if (logon == 2) {
 			
-			//----------SIGN-UP------------// things to add (confirm password?) (straight to login after?)
-			
-			System.out.print("Choose a new username: ");
-			String user = in.nextLine();
-			System.out.println("Choose a new password: ");
-			String pass = in.nextLine();
-	
-			DB_UserInteract.insert(user, pass); // new username and password stored
-			System.out.print("New user created successfully");
+			//----------SIGN-UP------------// things to add (confirm password?)
+			boolean temp = false;
+			while (temp != true) {
+				System.out.print("Choose a new username: ");
+				String user = in.nextLine();
+				System.out.println("Choose a new password: ");
+				String pass = in.nextLine();
+				System.out.println("Confirm password: ");
+				String confirmPass = in.nextLine();
+
+				if (Objects.equals(confirmPass, pass)) { //tests whether the passwords  are equal
+					if (DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist
+					temp = true; // ends loop
+					System.out.println("New user created successfully");}
+					else {
+						System.out.println("Something has gone wrong, most likely the username already exists. Try again. "); //user exists and was not stored again
+					}
+				}else {
+					System.out.println("Passwords do not match.. ");
+					}
+				}
 		
 				
-		}else {
-			//----------LOGIN------------// things to add (try again if user or password is wrong)
-			//while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
+		}
+			//----------LOGIN------------//
+			String user = "";
+			String pass = "";
+			while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
 				System.out.print("Username: ");
-				String user = in.nextLine();
+				user = in.nextLine();
 				System.out.print("Password: ");
-				String pass = in.nextLine();
+				pass = in.nextLine();
 			
-				if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether username and password exists
-				//DB_UserInteract.loginCheck(user, pass) = true; //ends loop
+				if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether user name and password exists
 					System.out.println("Successful login");
 				}else {
-					System.out.println("Username or password does not match"); //loop continues
+					System.out.println("Username or password does not match. Try again"); //loop continues
 				}
 			}
-		}
+		
 	}
+}
 
