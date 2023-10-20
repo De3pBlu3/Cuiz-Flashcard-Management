@@ -9,7 +9,8 @@ public class playLoop {
 //        random_play();
 //        DB_SetUp.createNewDatabase();
 //        DB_CreateTables.CreateStandardTables();
-        random_play();
+//        random_play();
+
     }
 
 
@@ -140,6 +141,64 @@ public class playLoop {
 
 
 
+
+    }
+
+    public static void increasingScore_play(){
+String user_ID = "sean";
+        Scanner scan = new Scanner(System.in);
+        // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
+
+        card[] cards_array = DB_CardInteract.allCardsIncreasingScore(user_ID);
+        int score = 0;
+
+        // loop through the array,
+        for (int i = 0; i < cards_array.length; i++) {
+            // show card
+            // enter 1, 2 ,3 ,4
+            // check if correct index (i.e index +1)
+            // if correct, add 1 to score, and add win to scores_db and change score_db by 1
+            // if incorrect, add loss to scores_db and change score_db by -1
+
+            // show card
+
+            System.out.println(cards_array[i].Question_content);
+            for (int answer = 0; answer < cards_array[i].Question_answers_arr.length; answer++) {
+                System.out.println(answer + 1 + ": \t" + cards_array[i].Question_answers_arr[answer]);
+            }
+
+            // enter 1, 2 ,3 ,4
+            System.out.print("Enter your answer: ");
+            int user_answer = scan.nextInt();
+
+            // check if correct index (i.e index +1)
+            if (user_answer == cards_array[i].Question_correct_answer + 1){
+                // if correct, add 1 to score, and add win to scores_db and change score_db by 1
+                DB_ScoreInteract.addWin(user_ID, cards_array[i].card_id);
+                score++; // local score += 1
+
+
+                System.out.println("\nCorrect!");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else {
+                // if incorrect, add loss to scores_db and change score_db by -1
+                DB_ScoreInteract.addLoss(user_ID, cards_array[i].card_id);
+                System.out.println("\nIncorrect!");
+                // wait 3 seconds
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
 
     }
 }

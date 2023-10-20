@@ -67,6 +67,41 @@ public class DB_CardInteract {
         return null;
     }
 
+
+    public static card[] allCardsIncreasingScore(String user_id){
+        String sql = "Select cards.card_id, cards.question, cards.answers, cards.correct_answer_index, cards.category, cards.difficulty, scores.score from cards LEFT JOIN scores ON scores.card_id = cards.card_id AND scores.user_ID = ? ORDER BY COALESCE(scores.score, 99999), cards.card_id;";
+
+        int numberOfCards = amountOfCardsTotal();
+
+        try (Connection conn = DB_ConnCreator.connect();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setString(1, user_id);
+            //
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs == null) {
+                System.out.println("No cards in DB");
+                return null;
+            }
+
+            card[] cards = new card[numberOfCards];
+
+            int count = 0;
+            // loop through the result set
+            while (rs.next()) {
+                card row = new card(rs.getString("card_id"), rs.getString("question"), rs.getString("answers"), rs.getInt("correct_answer_index"), rs.getInt("category"), rs.getInt("difficulty"));
+                cards[count] = row;
+                count++;
+            }
+            return cards;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+
+    }
     public static card[] returnAllCards() {
         String sql = "SELECT card_id, question, answers, correct_answer_index, category, difficulty FROM cards";
 
