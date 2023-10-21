@@ -1,7 +1,5 @@
 
 import javafx.application.Application; //Setting up!! Make sure you dont have src folder and that when making package, you click the second option
-	import javafx.event.ActionEvent;
-	import javafx.event.EventHandler;
 	import javafx.scene.Scene;
 	import javafx.scene.control.Button;
 	import javafx.stage.Popup;
@@ -22,8 +20,13 @@ import javafx.animation.KeyFrame;
 	import javafx.scene.paint.Color;
 	import javafx.util.Duration;
 
-	public class hm extends Application {
-		Scene home, login, signUp, Fail; // All scenes
+	//Scenes = start lowercase
+	//Layouts = Start uppercase
+	//Controls = start lowercase
+	
+	
+	public class LogonGui extends Application {
+		Scene home, login, signUp, mainQuiz, Fail; // All scenes
 		
 		
 		public static void main(String[] args) {
@@ -37,6 +40,12 @@ import javafx.animation.KeyFrame;
 			    //Labels and buttons creation  
 	//------------------------------------------------------------------------------------//	        
 			        Label Intro = new Label("Welcome to the quiz! Please Login or Sign up");
+			        
+			        Popup existingUserPopup = new Popup() ;
+						
+			        Label existingUserPLabel = new Label("Something has gone wrong, most likely the username already exists. Try again. ");
+			        	existingUserPLabel.setStyle("-fx-background-color:#D5D5D5; -fx-font-size:10;");
+			        	existingUserPopup.getContent().add(existingUserPLabel);
 			        
 			        TextField usernameField = new TextField();
 			        usernameField.setPromptText("Username");
@@ -59,11 +68,12 @@ import javafx.animation.KeyFrame;
 			        	String pass = passwordField.getText();
 		    		
 			        	if (DB_UserInteract.loginCheck(user, pass)== false) { 	//Checks whether user name and password exists
-			        		colorChange(usernameField, passwordField); 			//If it doesnt exist then go red
+			        		colorChange(usernameField, passwordField, confirmPasswordField, newPasswordField);			//If it doesnt exist then go red
 			        		System.out.print("Username or password does not match. Try again"); //loop continues
 			        	}else {
 			        		System.out.print("Successful login");
-			        		//Add change scene to main quiz page
+			        		window.setScene(mainQuiz);
+			        		window.setFullScreen(true);
 			        	}
 			        });
 			        
@@ -75,16 +85,16 @@ import javafx.animation.KeyFrame;
 			        	
 			        	if (Objects.equals(confirmPass, pass)) { //tests whether the passwords  are equal
 							if (DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist
-							//temp = true; // ends loop
-							System.out.println("New user created successfully");}
-							//Add change scene to main quiz page
-							else {
+							System.out.println("New user created successfully");
+							window.setScene(home);
+							}else {
 								System.out.println("Something has gone wrong, most likely the username already exists. Try again. "); //user exists and was not stored again
-								//PopUp for taken user
+								failPopUp(existingUserPopup,window);
 							}
 						}else {
 							System.out.println("Passwords do not match.. ");
-							//method to make passwords go red
+							colorChange(usernameField, passwordField, confirmPasswordField, newPasswordField);
+							
 							}
 			        	
 			        	//window.setScene(Fail);
@@ -101,14 +111,19 @@ import javafx.animation.KeyFrame;
 			        
 			        Button ReturnsignUpButton = new Button("Back to Sign Up");
 			        ReturnsignUpButton.setOnAction(e -> window.setScene(signUp));
+			        
+			        Button ReturnhomeButton = new Button("Return to Home");
+			        ReturnhomeButton.setOnAction(e -> window.setScene(home));
+			        
+			        Insets offset = new Insets(10,10,10,10);
+
 			        //You cannot use the same button on different scenes//
 	//---------------------------------------------------------------------------------------------------------------------//	        
-			        Insets Offset = new Insets(10,10,10,10);
 			        
 			     //home layout
 			        GridPane homeLay = new GridPane();
 			        //General layout settings
-			        homeLay.setPadding(Offset);  
+			        homeLay.setPadding(offset);  
 			        homeLay.setVgap(10);
 			        homeLay.setHgap(5);
 			        homeLay.setAlignment(Pos.CENTER);
@@ -123,7 +138,7 @@ import javafx.animation.KeyFrame;
 			     //Login layout
 			        GridPane LoginLay = new GridPane();
 			        //General layout settings
-			        LoginLay.setPadding(Offset);  
+			        LoginLay.setPadding(offset);  
 			        LoginLay.setVgap(10);
 			        LoginLay.setHgap(5);
 			        LoginLay.setAlignment(Pos.CENTER);
@@ -139,7 +154,7 @@ import javafx.animation.KeyFrame;
 			      //SignUp layout
 			        GridPane SignUpLay = new GridPane();
 			        //General layout settings
-			        SignUpLay.setPadding(Offset);  
+			        SignUpLay.setPadding(offset);  
 			        SignUpLay.setVgap(10);
 			        SignUpLay.setHgap(5);
 			        SignUpLay.setAlignment(Pos.CENTER);
@@ -153,12 +168,13 @@ import javafx.animation.KeyFrame;
 			        
 			        signUp = new Scene(SignUpLay, 450, 250);
 			        
-			     //Failure layout
-			        StackPane FailureLay = new StackPane();
-			        FailureLay.setAlignment(Pos.CENTER);
-			        FailureLay.getChildren().add(new TextField("Username or password does not match. Try again"));
+			     //MainQuiz layout
+			        StackPane MainQuizLay = new StackPane();
+			        MainQuizLay.setAlignment(Pos.CENTER);
+			        MainQuizLay.getChildren().add(ReturnhomeButton);
+			      
+			        mainQuiz = new Scene(MainQuizLay, 1920, 1080);
 			        
-			        Fail = new Scene(FailureLay, 300, 100);
 	//-------------------------------------------------------------------------------------------------------------------------//	        
   
 			        
@@ -167,27 +183,41 @@ import javafx.animation.KeyFrame;
 			        window.show();
 			       
 			    }
-		public static void colorChange(TextField usernameField, PasswordField passwordField) {
+		public static void colorChange(TextField usernameField, PasswordField passwordField, TextField confirmPasswordField, PasswordField newPasswordField) {
 			Timeline colorChangeTimeline = new Timeline( //To store keyframes
 		            new KeyFrame(Duration.seconds(0), e -> { // Change the text field's background color for 2 seconds
 		                usernameField.setStyle("-fx-background-color: red;");
 		                passwordField.setStyle("-fx-background-color: red;");
+		                newPasswordField.setStyle("-fx-background-color: red;");
+		                confirmPasswordField.setStyle("-fx-background-color: red;");
 		            }),
 		            new KeyFrame(Duration.seconds(1), e -> {// Revert the color after 3 seconds
 		                usernameField.setStyle("");
 		                passwordField.setStyle("");
+		                newPasswordField.setStyle("");
+		                confirmPasswordField.setStyle("");
 		            }));
 		            colorChangeTimeline.setCycleCount(1); //How many times it plays the sequence
 		            colorChangeTimeline.playFromStart(); //play
 					
 		}
-		public static void failPopUp() {	
+		public static void failPopUp(Popup existingUserPopup, Stage window) {	
+			Timeline popupTimeline = new Timeline( //To store keyframes
+		            new KeyFrame(Duration.seconds(0), e -> { // Change the text field's background color after 2 seconds
+		            	existingUserPopup.show(window);
+		            }),
+		            new KeyFrame(Duration.seconds(3), e -> {// Revert the color after 3 seconds
+		            	existingUserPopup.hide();
+		            }));
+			popupTimeline.setCycleCount(1); //How many times it plays the sequence
+			popupTimeline.playFromStart();
 		}
-	}	
+
+}	
 	
 	
 	
-	
+//	Ellice 0-216
 /*	 
   	- Stage = entire window
 	- Scene = everything inside window
