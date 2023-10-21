@@ -2,37 +2,9 @@ import java.util.Scanner;
 public class playLoop {
     public static void main(String[] args) {
 
-
-        // we are going to aasume user has been logged in, we might pass this as a parameter when the user logs in
-        // so for now, we will create user_id var and assign it a temp value
-        String user_id = "Sean";
-
-        // we will also assume the player has chosen a game mode, and will run a different method depdning on the game mode
-        // for now, we will create a random mode and call it
-//        random_play();
-        DB_SetUp.createNewDatabase();
-        DB_CreateTables.CreateStandardTables();
     }
 
-
-    public static void shuffle_array(card[] cards_array){
-        // shuffle array
-        for (int i = 0; i < cards_array.length; i++) {
-            int randomIndexToSwap = (int) (Math.random() * cards_array.length);
-            card temp = cards_array[randomIndexToSwap];
-            cards_array[randomIndexToSwap] = cards_array[i];
-            cards_array[i] = temp;
-        }
-    }
-    public static void random_play(){
-        Scanner scan = new Scanner(System.in);
-        // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
-
-        card[] cards_array = DB_CardInteract.returnAllCards();
-        int score = 0;
-        shuffle_array(cards_array);
-
-        // loop through the array,
+    private static int[] gameplayLoop(String user_ID, Scanner scan, card[] cards_array, int score, int wins, int losses) {
         for (int i = 0; i < cards_array.length; i++) {
             // show card
             // enter 1, 2 ,3 ,4
@@ -53,12 +25,14 @@ public class playLoop {
             // check if correct index (i.e index +1)
             if (user_answer == cards_array[i].Question_correct_answer + 1){
                 // if correct, add 1 to score, and add win to scores_db and change score_db by 1
-                //                DB_ScoreInteract.addWin(user_id, cards_array[i].card_id);
-//                DB_ScoreInteract.changeScore(user_id, 1);
-                score++;
+                DB_ScoreInteract.addWin(user_ID, cards_array[i].card_id);
+                score++; // local score += 1
+                wins++; // local wins += 1
+
+
                 System.out.println("\nCorrect!");
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -66,22 +40,102 @@ public class playLoop {
             }
             else {
                 // if incorrect, add loss to scores_db and change score_db by -1
-//                DB_ScoreInteract.addLoss(user_id, cards_array[i].card_id);
-//                DB_ScoreInteract.changeScore(user_id, -1);
+                DB_ScoreInteract.addLoss(user_ID, cards_array[i].card_id);
+                score--; // local score -= 1
+                losses++; // local losses += 1
+
                 System.out.println("\nIncorrect!");
                 // wait 3 seconds
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
             }
         }
+        return new int[]{score, wins, losses};
+    }
+
+    private static void processFinishResults(int[] results, String user_ID){
+        int score = results[0];
+        int wins = results[1];
+        int losses = results[2];
+
+        // add history record
+        DB_PlayHistory.addHistory(user_ID, score, wins, losses);
+
+        // print round results
+        System.out.println("Round score: " + score);
+        System.out.println("Round wins: " + wins);
+        System.out.println("Round losses: " + losses);
+
+        int total_rounds = wins + losses;
+        float win_percentage = (float) wins / total_rounds;
+        System.out.println("Round win percentage: " + win_percentage * 100 + "%");
+    }
+
+    public static void shuffle_array(card[] cards_array){
+        // shuffle array
+        for (int i = 0; i < cards_array.length; i++) {
+            int randomIndexToSwap = (int) (Math.random() * cards_array.length);
+            card temp = cards_array[randomIndexToSwap];
+            cards_array[randomIndexToSwap] = cards_array[i];
+            cards_array[i] = temp;
+        }
+    }
+    public static void random_play(){
+        String user_ID = "sean";
+        Scanner scan = new Scanner(System.in);
+        // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
+
+        card[] cards_array = DB_CardInteract.returnAllCards();
+        shuffle_array(cards_array);
 
 
+        int round_score = 0;
+        int round_wins = 0;
+        int round_losses = 0;
 
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
+    }
+
+    public static void increasingDifficulty_play(){
+        String user_ID = "sean";
+        Scanner scan = new Scanner(System.in);
+        // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
+
+        card[] cards_array = DB_CardInteract.allCardsIncreasingDifficulty();
+        int round_score = 0;
+        int round_wins = 0;
+        int round_losses = 0;
+
+        // gameplay loop
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
+
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
+    }
+    public static void increasingScore_play(){
+        String user_ID = "sean";
+        Scanner scan = new Scanner(System.in);
+        // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
+
+        card[] cards_array = DB_CardInteract.allCardsIncreasingScore(user_ID);
+        int round_score = 0;
+        int round_wins = 0;
+        int round_losses = 0;
+
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
+
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
     }
 
 }
