@@ -1,11 +1,10 @@
 import java.util.Scanner;
 public class playLoop {
     public static void main(String[] args) {
-        //random_play();
-        //increasingDifficulty_play();
+
     }
 
-    private static void gameplayLoop(String user_ID, Scanner scan, card[] cards_array, int score, int wins, int losses) {
+    private static int[] gameplayLoop(String user_ID, Scanner scan, card[] cards_array, int score, int wins, int losses) {
         for (int i = 0; i < cards_array.length; i++) {
             // show card
             // enter 1, 2 ,3 ,4
@@ -55,6 +54,25 @@ public class playLoop {
 
             }
         }
+        return new int[]{score, wins, losses};
+    }
+
+    private static void processFinishResults(int[] results, String user_ID){
+        int score = results[0];
+        int wins = results[1];
+        int losses = results[2];
+
+        // add history record
+        DB_PlayHistory.addHistory(user_ID, score, wins, losses);
+
+        // print round results
+        System.out.println("Round score: " + score);
+        System.out.println("Round wins: " + wins);
+        System.out.println("Round losses: " + losses);
+
+        int total_rounds = wins + losses;
+        float win_percentage = (float) wins / total_rounds;
+        System.out.println("Round win percentage: " + win_percentage * 100 + "%");
     }
 
     public static void shuffle_array(card[] cards_array){
@@ -79,14 +97,11 @@ public class playLoop {
         int round_wins = 0;
         int round_losses = 0;
 
-        // loop through the array,
-        gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        // print round results
-        System.out.println("Round score: " + round_score);
-        System.out.println("Round wins: " + round_wins);
-        System.out.println("Round losses: " + round_losses);
-        System.out.println("Round win percentage: " + (round_wins / (round_wins + round_losses)) * 100 + "%");
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
     }
 
     public static void increasingDifficulty_play(){
@@ -99,14 +114,12 @@ public class playLoop {
         int round_wins = 0;
         int round_losses = 0;
 
-        // loop through the array,
-        gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
+        // gameplay loop
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        // print round results
-        System.out.println("Round score: " + round_score);
-        System.out.println("Round wins: " + round_wins);
-        System.out.println("Round losses: " + round_losses);
-        System.out.println("Round win percentage: " + (round_wins / (round_wins + round_losses)) * 100 + "%");
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
     }
     public static void increasingScore_play(){
         String user_ID = "sean";
@@ -118,14 +131,11 @@ public class playLoop {
         int round_wins = 0;
         int round_losses = 0;
 
-        // loop through the array,
-        gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
+        int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        // print round results
-        System.out.println("Round score: " + round_score);
-        System.out.println("Round wins: " + round_wins);
-        System.out.println("Round losses: " + round_losses);
-        System.out.println("Round win percentage: " + (round_wins / (round_wins + round_losses)) * 100 + "%");
+        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
+
+        processFinishResults(results, user_ID);
     }
 
 }

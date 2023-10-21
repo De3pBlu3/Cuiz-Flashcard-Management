@@ -47,11 +47,11 @@ public class DB_CreateTables {
         String sql_create_table_history =
                 """
                          CREATE TABLE "play_history" (
-                        	"user_id"	TEXT,
+                        	"user_ID"	TEXT,
                         	"score_of_round"	INTEGER,
                         	"wins"	INTEGER,
                         	"losses"	INTEGER,
-                        	"date_played"	TEXT,
+                        	"date"	TEXT,
                         	FOREIGN KEY("user_id") REFERENCES "users"("user_ID")
                         );""";
 
