@@ -1,6 +1,3 @@
-package okay;
-
-	
 
 import javafx.application.Application; //Setting up!! Make sure you dont have src folder and that when making package, you click the second option
 	import javafx.event.ActionEvent;
@@ -29,7 +26,8 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 			    @Override
 			    public void start(Stage window) throws Exception {
 			        window.setTitle("The Quiz Logon"); //Window title
-			      
+			        //String user = "";
+			        //String pass = "";
 			    //Labels and buttons creation  
 	//------------------------------------------------------------------------------------//	        
 			        Label Intro = new Label("Welcome to the quiz! Please Login or Sign up");
@@ -46,8 +44,22 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 			        PasswordField newPasswordField = new PasswordField();
 			        newPasswordField.setPromptText("New password");
 			        
+			        PasswordField confirmPasswordField = new PasswordField();
+			        confirmPasswordField.setPromptText("Confirm password");
+			        
 			        Button confirmButton = new Button("Confirm");
-			        //confirmButton.setOnAction(e -> user = usernameField);
+			        confirmButton.setOnAction(e -> {
+			        	String user = usernameField.getText();
+			        	String pass = passwordField.getText();
+			        		
+						while (DB_UserInteract.loginCheck(user, pass) == false) { //loop to allow user to attempt login again after inserting incorrect details
+							if (DB_UserInteract.loginCheck(user, pass)) { //Checks whether user name and password exists
+								new TextField("Successful login");
+							}else {
+								new TextField("Username or password does not match. Try again"); //loop continues
+							}
+						}
+			        });
 			        
 			        Button createAccountButton = new Button("Create Account");
 			        //createAccountButton.setOnAction(e -> pass = passwordField);
@@ -58,10 +70,10 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 			        Button signUpButton = new Button("Sign Up");
 			        signUpButton.setOnAction(e -> window.setScene(signUp));
 			        
-			        Button ReturnloginButton = new Button("Login");
+			        Button ReturnloginButton = new Button("Back to Login Page");
 			        ReturnloginButton.setOnAction(e -> window.setScene(login));
 			        
-			        Button ReturnsignUpButton = new Button("Sign Up");
+			        Button ReturnsignUpButton = new Button("Back to Sign Up");
 			        ReturnsignUpButton.setOnAction(e -> window.setScene(signUp));
 			        //You cannot use the same button on different scenes//
 	//------------------------------------------------------------------------------------//	        
@@ -90,13 +102,13 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 			        LoginLay.setHgap(5);
 			        LoginLay.setAlignment(Pos.CENTER);
 			        //Children addition and positioning
-			        LoginLay.setConstraints(ReturnsignUpButton, 1 , 3);
+			        LoginLay.setConstraints(ReturnsignUpButton, 2 , 4);
 			        LoginLay.setConstraints(usernameField, 2, 1);
 			        LoginLay.setConstraints(passwordField, 2, 2);
-			        LoginLay.setConstraints(confirmButton, 3, 3);
+			        LoginLay.setConstraints(confirmButton, 2, 3);
 			        LoginLay.getChildren().addAll(ReturnsignUpButton, usernameField, passwordField, confirmButton);
 			        
-			        login = new Scene(LoginLay, 350, 150);
+			        login = new Scene(LoginLay, 450, 250);
 			   
 			      //SignUp layout
 			        GridPane SignUpLay = new GridPane();
@@ -106,16 +118,18 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 			        SignUpLay.setHgap(5);
 			        SignUpLay.setAlignment(Pos.CENTER);
 			        //Children addition and positioning
-			        SignUpLay.setConstraints(ReturnloginButton, 2, 3);
-			        SignUpLay.setConstraints(createAccountButton, 4, 3);
+			        SignUpLay.setConstraints(ReturnloginButton, 3, 5);
+			        SignUpLay.setConstraints(createAccountButton, 3, 4);
 			        SignUpLay.setConstraints(newUsernameField, 3, 1);
 			        SignUpLay.setConstraints(newPasswordField, 3, 2);
-			        SignUpLay.getChildren().addAll(ReturnloginButton, createAccountButton, newUsernameField, newPasswordField);
+			        SignUpLay.setConstraints(confirmPasswordField, 3, 3);
+			        SignUpLay.getChildren().addAll(ReturnloginButton, createAccountButton, newUsernameField, newPasswordField, confirmPasswordField);
 			        
-			        signUp = new Scene(SignUpLay, 350, 150);
-			    
+			        signUp = new Scene(SignUpLay, 450, 250);
+	//------------------------------------------------------------------------------------//	        
+  
 			        
-			        
+			    //Show the GUI
 			        window.setScene(home);
 			        window.show();
 			       
