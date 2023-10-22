@@ -14,7 +14,7 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 	import javafx.scene.control.PasswordField;
 
 
-	public class hm extends Application {
+	public class GUI extends Application {
 		Scene home, login, signUp; // All scenes
 		
 		
