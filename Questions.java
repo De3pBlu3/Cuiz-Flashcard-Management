@@ -26,10 +26,10 @@ public class Questions {
 			 card csquestion5 = new card("CSH5", "Every meet semi-lattice element pair has ... ?", "A supremum; An infimum; Both a supremum and an infimum; Neither a supremum or an infimum", 1, 1, 3);
 			 DB_CardInteract.addCardToDB(csquestion5);
 			 
-			 card csquestion6 = new card("CSH6", "Which of these represent a lattice homomorphism", "f (aVb) = f (a) V f (b)\r\n"
-			 		+ "f (a∧b) = f (a) ∧ f (b); f (b∧a) = f (b) V f (a)\r\n"
-			 		+ "f (bVa) = f (b) ∧ f (a); f (aVb) = f (a) ∧ f (b)\r\n"
-			 		+ "f (a∧b) = f (a) V f (b); f (a∧b) = f (a) ∧ f (b)\r\n"
+			 card csquestion6 = new card("CSH6", "Which of these represent a lattice homomorphism", "f (aVb) = f (a) V f (b);"
+			 		+ "f (a∧b) = f (a) ∧ f (b); f (b∧a) = f (b) V f (a);"
+			 		+ "f (bVa) = f (b) ∧ f (a); f (aVb) = f (a) ∧ f (b);"
+			 		+ "f (a∧b) = f (a) V f (b); f (a∧b) = f (a) ∧ f (b);"
 			 		+ "¬f (a∧b) = ¬f (a) ∧ f (b)", 0, 1, 3);
 			 DB_CardInteract.addCardToDB(csquestion6);
 			 
