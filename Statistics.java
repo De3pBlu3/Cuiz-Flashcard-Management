@@ -8,7 +8,7 @@ public class Statistics {
 		//- The popRoundsPlayed should increase by one (for every user)
 		//- The popTotalScore should also be increased by round score (for every user)
 		int[]playHistory = {8, 2, 5, 12, 65, 9, 29, 89}; //db of previously obtained scores to index through
-		int[]totalPlayHistory = {2, 5, 1, 8, 2, 7, 5, 12, 76, 35, 30};
+		int[]totalPlayHistory = {2, 5, 1, 8, 2, 7, 5, 12, 76, 35, 30};//random data rn
 		//Population (idk whether theres a special name for the area holding population details
 		
 		//DATA DISPLAY
