@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+// learned from https://www.sqlitetutorial.net/sqlite-java/
+
 public class DB_SetUp {
 
     public static void createNewDatabase() {

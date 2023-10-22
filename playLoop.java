@@ -75,7 +75,7 @@ public class playLoop {
         System.out.println("Round win percentage: " + win_percentage * 100 + "%");
     }
 
-    public static void shuffle_array(card[] cards_array){
+    public static void shuffle_array(card[] cards_array){ //https://www.digitalocean.com/community/tutorials/shuffle-array-java#2-shuffle-array-using-random-class
         // shuffle array
         for (int i = 0; i < cards_array.length; i++) {
             int randomIndexToSwap = (int) (Math.random() * cards_array.length);
