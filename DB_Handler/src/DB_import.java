@@ -51,4 +51,33 @@ public class DB_import {
 
     }
 
+    // export database, get all cards using DB_CardInteract, write to CSV file
+
+
+
+public static void CSVExport(String path_to_file){
+        try (Connection conn = DB_ConnCreator.connect();
+             Statement stmt = conn.createStatement()) {
+            String sql = "SELECT * FROM cards";
+            ResultSet rs = stmt.executeQuery(sql);
+            FileWriter writer = new FileWriter(path_to_file);
+            writer.append("card_id,question_content,question_answers,question_correct_answer,question_category,question_difficulty\n");
+            while (rs.next()) {
+                String card_id = rs.getString("card_id");
+                String question_content = rs.getString("question");
+                String question_answers = rs.getString("answers");
+                int question_correct_answer = rs.getInt("correct_answer_index");
+                int question_category = rs.getInt("category");
+                int question_difficulty = rs.getInt("difficulty");
+                writer.append(card_id); writer.append(","); writer.append(question_content); writer.append(","); writer.append(question_answers); writer.append(",");
+                writer.append(String.valueOf(question_correct_answer)); writer.append(","); writer.append(String.valueOf(question_category)); writer.append(","); writer.append(String.valueOf(question_difficulty));
+                writer.append("\n");
+            }
+            writer.flush();
+            writer.close();
+            rs.close();
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
