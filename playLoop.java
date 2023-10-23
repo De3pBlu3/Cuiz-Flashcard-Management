@@ -99,7 +99,6 @@ public class playLoop {
 
         int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
 
         processFinishResults(results, user_ID);
     }
@@ -117,7 +116,6 @@ public class playLoop {
         // gameplay loop
         int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
 
         processFinishResults(results, user_ID);
     }
@@ -133,7 +131,6 @@ public class playLoop {
 
         int[] results = gameplayLoop(user_ID, scan, cards_array, round_score, round_wins, round_losses);
 
-        round_score = results[0]; round_wins = results[1]; round_losses = results[2];
 
         processFinishResults(results, user_ID);
     }
