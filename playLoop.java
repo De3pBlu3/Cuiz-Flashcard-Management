@@ -84,8 +84,7 @@ public class playLoop {
             cards_array[i] = temp;
         }
     }
-    public static void random_play(){
-        String user_ID = "sean";
+    public static void random_play(String user_ID){
         Scanner scan = new Scanner(System.in);
         // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
 
@@ -103,8 +102,7 @@ public class playLoop {
         processFinishResults(results, user_ID);
     }
 
-    public static void increasingDifficulty_play(){
-        String user_ID = "sean";
+    public static void increasingDifficulty_play(String user_ID){
         Scanner scan = new Scanner(System.in);
         // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
 
@@ -119,8 +117,7 @@ public class playLoop {
 
         processFinishResults(results, user_ID);
     }
-    public static void increasingScore_play(){
-        String user_ID = "sean";
+    public static void increasingScore_play(String user_ID){
         Scanner scan = new Scanner(System.in);
         // take all cards from database, create array of objects, shuffle array, and then play through the array, remoiving cards as they are played
 
