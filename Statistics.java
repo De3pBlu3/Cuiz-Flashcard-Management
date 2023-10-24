@@ -1,5 +1,4 @@
 
-
 public class Statistics {
 	public static void main(String[]args) {
 		//At the end of each round:
@@ -26,13 +25,13 @@ public class Statistics {
 		System.out.println("Population Total Score: " + ptScore(totalPlayHistory));
 		System.out.println("Population Mean Score: " + (popMean(ptScore(totalPlayHistory), popRoundsPlayed)));
 		System.out.println("Population Median Score: " + popMedian(totalPlayHistory));
-		//System.out.println("Population Standard Deviation: " + popStandardDev(totalPlayHistory, popRoundsPlayed));
+		System.out.println("Population Standard Deviation: " + popStandardDev(totalPlayHistory, popRoundsPlayed));
 		
 	}
 
 	public static double soloMean(int totalScore, int roundsPlayed) {//*****
 		double mean = (double) totalScore/roundsPlayed; //Calculates mean
-		return mean;
+		return Math.round(mean * 100.0) / 100.0;
 		}
 	
 	public static int tScore(int[] playHistory) { //Total Score
@@ -40,7 +39,7 @@ public class Statistics {
 		for (int i = 0; i <= playHistory.length-1; i++) { //Adds all of the scores together
 			totalScore += playHistory[i];
 		}
-		return totalScore;
+		return Math.round(totalScore * 100)/100;
 	}
 
 	public static void Sort(int[] playHistory) {
@@ -75,7 +74,7 @@ public class Statistics {
 		}else {
 			median = playHistory[mid];//if array is odd
 		}
-		return median;
+		return Math.round(median * 100)/100;
 	}
 
 	public static double soloStatndardDev(int[] playHistory, int roundsPlayed) {//*****
@@ -85,7 +84,7 @@ public class Statistics {
 		}
 		double step2 = (double) step1/playHistory.length;
 		double standDev = (double)Math.pow(step2, 0.5);
-		return standDev ;
+		return Math.round(standDev * 100)/100;
 	}
 
 	public static int ptScore(int[] totalPlayHistory) { 
@@ -93,12 +92,12 @@ public class Statistics {
 		for (int i = 0; i <= totalPlayHistory.length-1; i++) { //Adds all of the scores together
 			popTotalScore += totalPlayHistory[i];
 		}
-		return popTotalScore;
+		return Math.round(popTotalScore * 100)/100;
 	}
 	
 	public static double popMean(int popTotalScore, int popRoundsPlayed) {//*****
 		double mean = (double)popTotalScore/popRoundsPlayed; //Calculates mean
-		return mean;
+		return Math.round(mean * 100)/100;
 	}
 
 	public static void popSort(int[] totalPlayHistory) {
@@ -133,18 +132,19 @@ public class Statistics {
 		}else {
 			median = totalPlayHistory[mid];//if array is odd
 		}
-		return median;
+		return Math.round(median * 100)/100;
 	}
 
-	public static double popStatndardDev(int[] totalPlayHistory, int popRoundsPlayed) {//*****
+	public static double popStandardDev(int[] totalPlayHistory, int popRoundsPlayed) {//*****
 		double step1 = 0;
 		for (int i = 0; i <=totalPlayHistory.length-1;i++) {
 			 step1 = (double)(totalPlayHistory[i] - ((double)popMean(ptScore(totalPlayHistory), popRoundsPlayed)))*(double)(totalPlayHistory[i] - (popMean(ptScore(totalPlayHistory), popRoundsPlayed)));
 		}
 		double step2 = (double) step1/totalPlayHistory.length;
 		double standDev = (double)Math.pow(step2, 0.5);
-		return standDev ;	
+		return Math.round(standDev * 100)/100 ;	
 	}
+	
 
 
 }
