@@ -1,23 +1,44 @@
 
 public class Statistics {
+	public static history[] get_player_history(String user_id) {
+
+        return DB_PlayHistory.returnAllHistoryOfUser(user_id);
+	}
+
+	public static int[] history_to_scores(history[] player_history) {
+		int[] scores = new int[player_history.length];
+		for (int i = 0; i < player_history.length; i++) {
+			scores[i] = player_history[i].getScore_of_round();
+		}
+		return scores;
+	}
 	public static void main(String[]args) {
 		//At the end of each round:
 		//- The number of rounds played should increase by 1 (a per user measure, each user has their own)
 		//- The Total score should be increased by round score (which is also stored in play history i think)(per user measure)
 		//- The popRoundsPlayed should increase by one (for every user)
 		//- The popTotalScore should also be increased by round score (for every user)
-		int[]playHistory = {8, 2, 5, 12, 65, 9, 29, 89}; //db of previously obtained scores to index through
-		int[]totalPlayHistory = {2, 5, 1, 8, 2, 7, 5, 12, 76, 35, 30};//random data rn
+		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser("sean");
+		int[] sean_historyScore = new int[player_history.length];
+		for (int i = 0; i < player_history.length; i++) {
+			sean_historyScore[i] = player_history[i].getScore_of_round();
+		}
+
+		history[] totalHistory = DB_PlayHistory.returnAllHistory();
+		int[] totalPlayHistory = new int[totalHistory.length];
+		for (int i = 0; i < totalHistory.length; i++) {
+			totalPlayHistory[i] = totalHistory[i].getScore_of_round();
+		}
 		//Population (idk whether theres a special name for the area holding population details
 		
 		//DATA DISPLAY
-		int roundsPlayed = playHistory.length;
+		int roundsPlayed = sean_historyScore.length;
 		int popRoundsPlayed = totalPlayHistory.length;
 		System.out.println("Rounds Played by this User: " + roundsPlayed);
-		System.out.println("Total Score by this User: " + tScore(playHistory));
-		System.out.println("Mean Score: " + (soloMean(tScore(playHistory), roundsPlayed)));	
-		System.out.println("Median Score: " + soloMedian(playHistory));
-		System.out.println("Standard Deviation: " + soloStatndardDev(playHistory, roundsPlayed));
+		System.out.println("Total Score by this User: " + tScore(sean_historyScore));
+		System.out.println("Mean Score: " + (soloMean(tScore(sean_historyScore), roundsPlayed)));
+		System.out.println("Median Score: " + soloMedian(sean_historyScore));
+		System.out.println("Standard Deviation: " + soloStatndardDev(sean_historyScore, roundsPlayed));
 		
 		System.out.println("");
 		
@@ -142,7 +163,7 @@ public class Statistics {
 		}
 		double step2 = (double) step1/totalPlayHistory.length;
 		double standDev = (double)Math.pow(step2, 0.5);
-		return Math.round(standDev * 100)/100 ;	
+		return Math.round(standDev * 100)/100 ;
 	}
 	
 
