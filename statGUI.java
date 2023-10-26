@@ -30,6 +30,44 @@ public class statGUI extends Application {
         // TODO Auto-generated method stub
         launch(args);  //method in application class that sets up javafx app (setup)
     }
+    public static LineChart<String, Number> create_line_chart_player_history() {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Date");
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Score");
+        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle("Score over time (Player)");
+        history[] player_history = Statistics.get_player_history("sean");
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Date/Score");
+        // line chart data
+        for (int i = 0; i < player_history.length; i++) {
+            series.getData().add(new XYChart.Data<>(player_history[i].getDate(), player_history[i].getScore_of_round()));
+        }
+        // line chart data
+        lineChart.getData().add(series);
+        return(lineChart);
+    }
+
+    public static LineChart<String, Number> create_line_chart_population_history() {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Date");
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Score");
+        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle("Score over time (population history)");
+        history[] pop_history = Statistics.get_all_history();
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Date/Score");
+        // line chart data
+        for (int i = 0; i < pop_history.length; i++) {
+            series.getData().add(new XYChart.Data<>(pop_history[i].getDate(), pop_history[i].getScore_of_round()));
+        }
+        // line chart data
+        lineChart.getData().add(series);
+        return(lineChart);
+    }
+
     @Override
     public void start(Stage window) throws Exception {
         window.setTitle("Cuiz stats"); //Window title
@@ -119,28 +157,8 @@ public class statGUI extends Application {
         // y axis is score
         //
         // line chart
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel("Date");
-
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Score");
-
-        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Score over time");
-
-        history[] player_history = Statistics.get_player_history("sean");
-
-        XYChart.Series series = new XYChart.Series();
-
-        series.setName("Date/Score");
-        // line chart data
-        for (int i = 0; i < player_history.length; i++) {
-            series.getData().add(new XYChart.Data<>(player_history[i].getDate(), player_history[i].getScore_of_round()));
-        }
-
-        // line chart data
-        lineChart.getData().add(series);
-
+        LineChart<String, Number> lineChart_player = create_line_chart_player_history();
+        LineChart<String, Number> lineChart_pop = create_line_chart_population_history();
         //You cannot use the same button on different scenes//
         //---------------------------------------------------------------------------------------------------------------------//
 
@@ -152,10 +170,10 @@ public class statGUI extends Application {
         homeLay.setHgap(5);
         homeLay.setAlignment(Pos.CENTER);
         //Children addition and positioning
-//        homeLay.setConstraints(lineChart, 1, 0);
-//        homeLay.setConstraints(loginButton, 0, 2);
-//        homeLay.setConstraints(signUpButton, 2, 2);
-        homeLay.getChildren().addAll(lineChart);
+//        homeLay.setConstraints(lineChart_player, 1, 3);
+        homeLay.setConstraints(lineChart_player, 0, 2);
+        homeLay.setConstraints(lineChart_pop, 2, 2);
+        homeLay.getChildren().addAll(lineChart_player, lineChart_pop);
 
         home = new Scene(homeLay, 440, 250);//Homepage setup
 

@@ -5,6 +5,9 @@ public class Statistics {
         return DB_PlayHistory.returnAllHistoryOfUser(user_id);
 	}
 
+	public static history[] get_all_history() {
+		return DB_PlayHistory.returnAllHistory();
+	}
 	public static int[] history_to_scores(history[] player_history) {
 		int[] scores = new int[player_history.length];
 		for (int i = 0; i < player_history.length; i++) {
