@@ -6,38 +6,41 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.geometry.Orientation;
 import javafx.stage.Popup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import javafx.util.Duration;
 import java.util.Objects;
 import javafx.scene.Group;
-
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.Label;
 
 public class statGUI extends Application {
-    Scene home; // All scenes
+    Scene linePage; // All scenes
+    Scene leaderboard;
+
 
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         launch(args);  //method in application class that sets up javafx app (setup)
     }
-    public static LineChart<String, Number> create_line_chart_player_history() {
+    public static LineChart<String, Number> create_line_chart_player_history(String user_id) {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Date");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Score");
         LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Score over time (Player)");
-        history[] player_history = Statistics.get_player_history("sean");
+        history[] player_history = Statistics.get_player_history(user_id);
         XYChart.Series series = new XYChart.Series();
         series.setName("Date/Score");
         // line chart data
@@ -70,6 +73,7 @@ public class statGUI extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
+        String user_id = "sean";
         window.setTitle("Cuiz stats"); //Window title
 
         //Labels and buttons creation
@@ -137,7 +141,6 @@ public class statGUI extends Application {
 //
 //        Button loginButton = new Button("Login");
 //        loginButton.setOnAction(e -> window.setScene(login));
-//
 //        Button signUpButton = new Button("Sign Up");
 //        signUpButton.setOnAction(e -> window.setScene(signUp));
 //
@@ -150,6 +153,10 @@ public class statGUI extends Application {
 //        Button ReturnhomeButton = new Button("Return to Home");
 //        ReturnhomeButton.setOnAction(e -> window.setScene(home));
 
+        // create vertical seperator
+        Separator separator = new Separator();
+        separator.setOrientation(Orientation.VERTICAL);
+
         Insets offset = new Insets(10,10,10,10);
 
 
@@ -157,10 +164,110 @@ public class statGUI extends Application {
         // y axis is score
         //
         // line chart
-        LineChart<String, Number> lineChart_player = create_line_chart_player_history();
+
+
+
+        GridPane chatLayout = getChartGrid(offset, separator, user_id);
+
+        // create table view
+        TableView table = new TableView();
+        // make table not editable
+        table.setEditable(false);
+
+        // set table width
+        table.setPrefWidth(300);
+
+        // make sure table has 2 columns
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn userNameCol = new TableColumn("Username");
+        TableColumn scoreCol = new TableColumn("Score");
+        table.getColumns().addAll(userNameCol, scoreCol);
+
+        // create table data
+        userNameCol.setCellValueFactory(new PropertyValueFactory<>("user_ID"));
+        scoreCol.setCellValueFactory(new PropertyValueFactory<>("score_of_round"));
+        history[] all_history = Statistics.get_all_history();
+        for (int i = 0; i < all_history.length; i++) {
+            table.getItems().add(all_history[i]);
+        }
+
+        GridPane leaderboardLay = new GridPane();
+        // add table to the layout
+        leaderboardLay.setConstraints(table, 0, 0);
+        leaderboardLay.getChildren().add(table);
+
+        // when user clicks on a row, show the line chart for that user on the right
+        table.setOnMouseClicked(e -> {
+            // remove the line chart from the previous layout if it exists
+            leaderboardLay.getChildren().removeIf(node -> node instanceof LineChart);
+            // get the selected row
+            System.out.println("clicked on " + table.getSelectionModel().getSelectedItem());
+            // get the selected row c
+            history selectedRow = (history) table.getSelectionModel().getSelectedItem();
+            // get the user id of the selected row
+            String row_user_id = selectedRow.getUser_ID();
+            // create a line chart for that user
+            LineChart<String, Number> lineChart = create_line_chart_player_history(row_user_id);
+            // add the line chart to the layout
+            leaderboardLay.setConstraints(lineChart, 1, 0);
+            leaderboardLay.getChildren().add(lineChart);
+
+        });
+
+
+
+        // add table to the layout
+
+
+
+
+        //---------------------------------------------------------------------------------------------------------------------//
+
+
+        // create a tabpane
+        TabPane tabpane = new TabPane();
+
+        // create Tab
+        Tab tab = new Tab("Leaderboard");
+        // add label to the tab
+        tab.setContent(leaderboardLay);
+        tab.closableProperty().setValue(false);
+        // add tab
+        tabpane.getTabs().add(tab);
+
+        // create Tab
+        Tab tab2 = new Tab("Your Graphs");
+        // add label to the tab
+        tab2.setContent(chatLayout);
+        tab2.closableProperty().setValue(false);
+        // add tab
+        tabpane.getTabs().add(tab2);
+//
+//        Tab tab3 = new Tab("Your Stats");
+//        // add label to the tab
+//        tab3.setContent(chatLayout);
+//        tab3.closableProperty().setValue(false);
+//        // add tab
+//        tabpane.getTabs().add(tab3);
+//
+
+
+        // -----------------------------------------------------------------------------------------------//
+
+        linePage = new Scene(tabpane, 440, 250);//Homepage setup
+
+        //Show the GUI
+        window.setScene(linePage);
+        window.show();
+
+    }
+
+        private static GridPane getChartGrid(Insets offset, Separator separator, String user_id) {
+        LineChart<String, Number> lineChart_player = create_line_chart_player_history(user_id);
         LineChart<String, Number> lineChart_pop = create_line_chart_population_history();
         //You cannot use the same button on different scenes//
-        //---------------------------------------------------------------------------------------------------------------------//
+
 
         //home layout
         GridPane homeLay = new GridPane();
@@ -172,15 +279,10 @@ public class statGUI extends Application {
         //Children addition and positioning
 //        homeLay.setConstraints(lineChart_player, 1, 3);
         homeLay.setConstraints(lineChart_player, 0, 2);
+        homeLay.setConstraints(separator, 1, 2);
         homeLay.setConstraints(lineChart_pop, 2, 2);
-        homeLay.getChildren().addAll(lineChart_player, lineChart_pop);
-
-        home = new Scene(homeLay, 440, 250);//Homepage setup
-
-        //Show the GUI
-        window.setScene(home);
-        window.show();
-
+        homeLay.getChildren().addAll(lineChart_player, separator, lineChart_pop);
+        return homeLay;
     }
 
 }
