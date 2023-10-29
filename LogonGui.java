@@ -5,17 +5,14 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 	import javafx.stage.Popup;
 	import javafx.scene.layout.GridPane;
 	import javafx.scene.layout.StackPane;
-	import javafx.scene.layout.VBox;
 	import javafx.stage.Stage;
 	import javafx.scene.control.Label;
 	import javafx.geometry.Insets;
 	import javafx.geometry.Pos; 
 	import javafx.scene.control.TextField;
 	import javafx.scene.control.PasswordField;
-
-import java.util.Objects;
-
-import javafx.animation.KeyFrame;
+	import java.util.Objects;
+	import javafx.animation.KeyFrame;
 	import javafx.animation.Timeline;
 	import javafx.scene.paint.Color;
 	import javafx.util.Duration;
@@ -35,7 +32,7 @@ import javafx.animation.KeyFrame;
 			    }
 			    @Override
 		public void start(Stage window) throws Exception {
-			        window.setTitle("The Quiz Logon"); //Window title
+			        window.setTitle("The CUiz Logon"); //Window title
 			       
 			    //Labels and buttons creation  
 	//------------------------------------------------------------------------------------//	        
