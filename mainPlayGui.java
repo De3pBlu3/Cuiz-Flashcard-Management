@@ -36,6 +36,7 @@ public class mainPlayGui extends Application {
 
 	}
 
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("The CUiz"); //Window title
@@ -176,6 +177,14 @@ public class mainPlayGui extends Application {
 		
 		Button doneButton = new Button("Done");//******************************
 		doneButton.setOnAction(e -> {
+			// generate string USR+random number
+			// add card to database
+			int rand = (int)(Math.random() * 500)+1;
+			// string
+			String card_id= "usr" + rand;
+
+			card user_manual = new card(card_id, questionInTextfield.getText(), rightAnswerInTextfield.getText() + ";" + wrongAnswer1InTextfield.getText() + ";" + wrongAnswer2InTextfield.getText() + ";" + wrongAnswer3InTextfield.getText(), 0, 0, 0);
+			DB_CardInteract.addCardToDB(user_manual);
 			Popup successfulQAddp = new Popup();
 			Label successfulQAddpLabel = new Label("Question Successfully added");
 			successfulQAddp.getContent().add(successfulQAddpLabel);
