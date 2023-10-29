@@ -53,6 +53,33 @@ public class Statistics {
 		
 	}
 
+	public static stat[] createPlayerStats(String User_ID){
+		// get player history
+		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser(User_ID);
+		int[] player_history_scores = history_to_scores(player_history);
+
+		// create array of stats
+		stat[] player_stats = new stat[5];
+
+		// rounds played
+		player_stats[0] = new stat(User_ID, "number of rounds played", player_history_scores.length);
+
+		// total score
+		player_stats[1] = new stat(User_ID, "total score", tScore(player_history_scores));
+
+		// mean score
+		player_stats[2] = new stat(User_ID, "mean score", soloMean(tScore(player_history_scores), player_history_scores.length));
+
+		// median score
+		player_stats[3] = new stat(User_ID, "median score", soloMedian(player_history_scores));
+
+		// standard deviation
+		player_stats[4] = new stat(User_ID, "standard deviation", soloStatndardDev(player_history_scores, player_history_scores.length));
+
+		return player_stats;
+
+	}
+
 	public static double soloMean(int totalScore, int roundsPlayed) {//*****
 		double mean = (double) totalScore/roundsPlayed; //Calculates mean
 		return Math.round(mean * 100.0) / 100.0;

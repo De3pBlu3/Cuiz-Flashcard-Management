@@ -217,10 +217,37 @@ public class statGUI extends Application {
 
 
 
+        // create stats table, will contain stats for the user (mean, median, standard deviation)
+        TableView statsTable = new TableView();
+        // make table not editable
+        statsTable.setEditable(false);
+
+        // set table width
+        statsTable.setPrefWidth(300);
+
+        // make sure table has 2 columns
+        statsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn statNameCol = new TableColumn("Stat");
+        TableColumn statValueCol = new TableColumn("Value");
+        statsTable.getColumns().addAll(statNameCol, statValueCol);
+
+        // create table data
+        statNameCol.setCellValueFactory(new PropertyValueFactory<>("type_of_stat"));
+        statValueCol.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+
+        stat[] player_stat_data = Statistics.createPlayerStats(user_id);
+
+        for (int i = 0; i < player_stat_data.length; i++) {
+            statsTable.getItems().add(player_stat_data[i]);
+        }
+
         // add table to the layout
-
-
-
+        GridPane personalStatLayout = new GridPane();
+        // add table to the layout
+        personalStatLayout.setConstraints(statsTable, 0, 0);
+        personalStatLayout.getChildren().add(statsTable);
 
         //---------------------------------------------------------------------------------------------------------------------//
 
@@ -244,12 +271,12 @@ public class statGUI extends Application {
         // add tab
         tabpane.getTabs().add(tab2);
 //
-//        Tab tab3 = new Tab("Your Stats");
-//        // add label to the tab
-//        tab3.setContent(chatLayout);
-//        tab3.closableProperty().setValue(false);
-//        // add tab
-//        tabpane.getTabs().add(tab3);
+        Tab tab3 = new Tab("Your Stats");
+        // add label to the tab
+        tab3.setContent(statsTable);
+        tab3.closableProperty().setValue(false);
+        // add tab
+        tabpane.getTabs().add(tab3);
 //
 
 
