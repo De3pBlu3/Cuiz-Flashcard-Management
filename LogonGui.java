@@ -200,10 +200,10 @@ import javafx.application.Application; //Setting up!! Make sure you dont have sr
 		}
 		public static void failPopUp(Popup existingUserPopup, Stage window) {	
 			Timeline popupTimeline = new Timeline( //To store keyframes
-		            new KeyFrame(Duration.seconds(0), e -> { // Change the text field's background color after 2 seconds
+		            new KeyFrame(Duration.seconds(0), e -> { 
 		            	existingUserPopup.show(window);
 		            }),
-		            new KeyFrame(Duration.seconds(3), e -> {// Revert the color after 3 seconds
+		            new KeyFrame(Duration.seconds(3), e -> {
 		            	existingUserPopup.hide();
 		            }));
 			popupTimeline.setCycleCount(1); //How many times it plays the sequence
