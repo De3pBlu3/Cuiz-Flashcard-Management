@@ -55,7 +55,7 @@ public class Questions {
 			 
 				//---------------------------------------------------------------------------------------------------------------
 			 
-			 card coquestion1 = new card("COE1", "What part of computer hardware holds the registers?", "RAM; CPU; Motherboard; GUI", 1, 3, 1);
+			 card coquestion1 = new card("COE1", "What part of computer hardware holds the registers?", "RAM; CPU; Motherboard; deprecCLI.GUI", 1, 3, 1);
 			 DB_CardInteract.addCardToDB(coquestion1);
 			 
 			 card coquestion2 = new card("COE2", "What is the flow of instructions to be operated on a digital computer?", "Registers - RAM - Cache - Disk; RAM - Disk - Registers - Cache; Registers- Cache - RAM - Disk; Disk - RAM - Cache - Registers", 3, 3, 1);

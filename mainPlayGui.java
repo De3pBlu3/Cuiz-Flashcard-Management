@@ -1,5 +1,3 @@
-
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -29,10 +27,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.CheckBox;
 
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class mainPlayGui extends Application {
-	Scene mainQuiz, playModes, stats, questionIO, game, postGame, home;
-	Stage stage;
+
+	Scene mainQuiz;
+	Scene playModes;
+	Scene stats;
+	Scene questionIO;
+	Scene game;
+	Scene postGame;
+	Scene home;
+	static Stage stage;
+
+
 	int i = 0;
 	int answer = 0;
 	public static void main(String[] args) {
@@ -44,7 +52,11 @@ public class mainPlayGui extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("The CUiz"); //Window title
-		
+		String user_ID = "Sean";
+		card[] cards_array = DB_CardInteract.allCardsIncreasingDifficulty();
+		AtomicInteger score = new AtomicInteger();
+		AtomicInteger wins = new AtomicInteger();
+		AtomicInteger losses = new AtomicInteger();
 		//Controls
 		//------------------------------------------------------------------------
 			//mainQuiz controls
@@ -223,28 +235,16 @@ public class mainPlayGui extends Application {
 		Label Answer4 = new Label("Ans4");
 		 Answer4.setText(cards_array[i].Question_answers_arr[3]);
 		
-		PopUp incorrectP = new PopUp();
+		Popup incorrectP = new Popup();
 			Label incorrectPLabel = new Label("Incorrect");
 			incorrectP.getContent().add(incorrectPLabel);
 			
-		PopUp correctP = new PopUp();
+		Popup correctP = new Popup();
 			Label correctPLabel = new Label("Correct");
 			correctP.getContent().add(correctPLabel);
 			
 		 
-		Button nextButton = new Button("Next");
-		nextButton.setOnAction(e -> {showNextItem(questionLabel);
-		if (user_answer == cards_array[i].Question_correct_answer + 1){
-            // if correct, add 1 to score, and add win to scores_db and change score_db by 1
-            DB_ScoreInteract.addWin(user_ID, cards_array[i].card_id);
-            score++; // local score += 1
-            wins++; // local wins += 1
-            CorrectPopUp(correctP, stage);
-		}else {
-			IncorrectPopUp(incorrectP, stage);
-		}
-		});
-		
+
 		CheckBox Answer1ckBox = new CheckBox();
 		
 		CheckBox Answer2ckBox = new CheckBox();
@@ -252,8 +252,40 @@ public class mainPlayGui extends Application {
 		CheckBox Answer3ckBox = new CheckBox();
 		
 		CheckBox Answer4ckBox = new CheckBox();
-		
-		
+
+		Button nextButton = new Button("Next");
+		nextButton.setOnAction(e -> {
+
+			if (AnswerSelection(Answer1ckBox, Answer2ckBox, Answer3ckBox, Answer4ckBox) == cards_array[i].Question_correct_answer){
+				// if correct, add 1 to score, and add win to scores_db and change score_db by 1
+				DB_ScoreInteract.addWin(user_ID, cards_array[i].card_id);
+				score.getAndIncrement(); // local score += 1
+				wins.getAndIncrement(); // local wins += 1
+				CorrectPopUp(correctP, stage);
+
+			}else {
+				DB_ScoreInteract.addLoss(user_ID, cards_array[i].card_id);
+				score.getAndDecrement(); // local score -= 1
+				losses.getAndIncrement(); // local losses += 1
+				IncorrectPopUp(incorrectP, stage);
+			}
+			if (i < cards_array.length - 1) {
+				i++;
+			}else {
+				stage.setScene(postGame);
+			}
+
+			System.out.println(score);
+
+			questionLabel.setText(cards_array[i].Question_content);
+			Answer1.setText(cards_array[i].Question_answers_arr[0]);
+			Answer2.setText(cards_array[i].Question_answers_arr[1]);
+			Answer3.setText(cards_array[i].Question_answers_arr[2]);
+			Answer4.setText(cards_array[i].Question_answers_arr[3]);
+			currentScoreLabel.setText("Current Score:" + score);
+
+		});
+
 		//postGame contols
 		Label gameOverLabel = new Label("Game Over");
 		
@@ -273,7 +305,7 @@ public class mainPlayGui extends Application {
 		//---------------------------------------------------------------------------
 			//mainQuiz layout
 		GridPane CenterMainQuizLay = new GridPane();
-		CenterMainQuizLay.setPadding(offset);  
+		CenterMainQuizLay.setPadding(offset);
 		CenterMainQuizLay.setVgap(10);
 		CenterMainQuizLay.setHgap(5);
 		CenterMainQuizLay.setHalignment(playButton, HPos.CENTER);
@@ -387,20 +419,7 @@ public class mainPlayGui extends Application {
 		PostGameLay.getChildren().addAll(gameOverLabel, scoreLabel, scoreDisplayLabel, returnToMainButton, viewStatsButton );
 		
 		postGame = new Scene(PostGameLay);
-		
-		//-------------------------------------------------
-		stage.setScene(mainQuiz);
-		stage.setFullScreen(true);
-		stage.show();
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		
 	}
@@ -417,31 +436,35 @@ public class mainPlayGui extends Application {
 		popupTimeline.playFromStart();
 	}
 	
-    private void showNextItem(Label questionLabel) {
-        if (i < cards_array.length - 1) {
-            i++;
-            questionLabel.setText(cards_array[i].Question_content);
-        }else {
-            	stage.setScene(postGame);
-            }
-    
-        }
 
-    public static int AnswerSelection(boolean Answer1ckBox, boolean Answer2ckBox, boolean Answer3ckBox, boolean Answer4ckBox) {
-    	int user_answer = 9;
-    	if (Answer1ckBox) {
+    public static int AnswerSelection(CheckBox Answer1ckBox, CheckBox Answer2ckBox, CheckBox Answer3ckBox, CheckBox Answer4ckBox) {
+    	// test if more than one answer is selected
+		int total = 0;
+		int user_answer = 9;
+    	if (Answer1ckBox.isSelected()) {
     		user_answer = 0;
-    	}else if(Answer2ckBox){
-    		user_answer = 1;
-    	}else if(Answer3ckBox) {
-    		user_answer = 2;
-    	}else if(Answer4ckBox) {
-    		user_answer = 3;
+			total += 1;
     	}
+		if(Answer2ckBox.isSelected()){
+    		user_answer = 1;
+			total += 1;
+    	}
+		if(Answer3ckBox.isSelected()) {
+    		user_answer = 2;
+			total += 1;
+    	}
+		if(Answer4ckBox.isSelected()) {
+    		user_answer = 3;
+			total += 1;
+    	}
+		if (total == 1) {
     	return user_answer;
+		}
+		return 9;
     }
-    
-    public static void CorrectPopUp(Popup correctP, Stage stage) {	
+
+
+    public static void CorrectPopUp(Popup correctP, Stage stage) {
 		Timeline popupTimeline = new Timeline( //To store keyframes
 	            new KeyFrame(Duration.seconds(0), e -> { 
 	            	correctP.show(stage);
@@ -453,7 +476,7 @@ public class mainPlayGui extends Application {
 		popupTimeline.playFromStart();
 	}
     
-    public static void IncorrectPopUp(Popup incorrectP, Stage stage) {	
+    public static void IncorrectPopUp(Popup incorrectP, Stage stage) {
 		Timeline popupTimeline = new Timeline( //To store keyframes
 	            new KeyFrame(Duration.seconds(0), e -> { 
 	            	incorrectP.show(stage);
