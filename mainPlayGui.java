@@ -19,6 +19,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -26,10 +27,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.CheckBox;
 
 
 public class mainPlayGui extends Application {
-	Scene mainQuiz, playModes, stats, questionIO, home;
+	Scene mainQuiz, playModes, stats, questionIO, game, home;
 	Stage stage;
 	public static void main(String[] args) {
 		launch(args);  //method in application class that sets up javafx app (setup)
@@ -105,7 +107,7 @@ public class mainPlayGui extends Application {
 		CUizPenguinView.setFitHeight(75); 
 		CUizPenguinView.setImage(CUizPenguin);
 		
-		
+		//-------------------------------------------------
 			//playModes controls
 		Button incDifficultyButton = new Button("Increasing\n" 
 				+ "Difficulty");
@@ -114,7 +116,9 @@ public class mainPlayGui extends Application {
 		incDifficultyButton.setBackground(transparentBackground);
 		incDifficultyButton.setEffect(dropShadow);
 		incDifficultyButton.setTextAlignment(TextAlignment.CENTER);
-		//incDifficultyButton.setOnAction(e -> stage.setScene());
+		incDifficultyButton.setOnAction(e -> {stage.setScene(game);
+			//increasingDifficulty_play(user_ID);
+		});
 		
 		Button incScoreButton = new Button("Increasing\n" 
 				+ "Score");
@@ -123,7 +127,9 @@ public class mainPlayGui extends Application {
 		incScoreButton.setBackground(transparentBackground);
 		incScoreButton.setEffect(dropShadow);
 		incScoreButton.setTextAlignment(TextAlignment.CENTER);
-		//incScoreButton.setOnAction(e -> stage.setScene());
+		incScoreButton.setOnAction(e -> {stage.setScene(game);
+			//increasingScore_play(user_ID);  uncomment once connected
+		});
 		
 		Button randomPlayButton = new Button("Random\n" 
 				+ "Play");
@@ -132,7 +138,9 @@ public class mainPlayGui extends Application {
 		randomPlayButton.setBackground(transparentBackground);
 		randomPlayButton.setEffect(dropShadow);
 		randomPlayButton.setTextAlignment(TextAlignment.CENTER);
-		//randomPlayButton.setOnAction(e -> stage.setScene());
+		randomPlayButton.setOnAction(e -> {stage.setScene(game);
+			//random_play(user_ID); uncomment once connected
+		});
 		
         ImageView CUizView1 = new ImageView();
         CUizView1.setFitWidth(50); 
@@ -155,7 +163,7 @@ public class mainPlayGui extends Application {
 		chooseModeLabel.setEffect(dropShadow);
 		chooseModeLabel.setTextAlignment(TextAlignment.CENTER);
 		
-		
+		//-----------------------------------------------------------
 			//questionIO controls
 		TextField questionInTextfield= new TextField();
 		questionInTextfield.setPromptText("Input Question");
@@ -194,6 +202,31 @@ public class mainPlayGui extends Application {
 		
         ImageView CUizView2 = new ImageView();
 		CUizView2.setImage(CUizLogo);
+		
+		//------------------------------------------------------
+			//game controls
+		Label questionLabel = new Label();
+		
+		Label currentScoreLabel = new Label("Current Score:" + "score"); //put real score var
+		
+		Label Answer1 = new Label("Ans1");
+		
+		Label Answer2 = new Label("Ans2");
+		
+		Label Answer3 = new Label("Ans3");
+		
+		Label Answer4 = new Label("Ans4");
+		
+		Button nextButton = new Button("Next");
+		//nextButton.setOnAction(e -> );
+		
+		CheckBox Answer1ckBox = new CheckBox();
+		
+		CheckBox Answer2ckBox = new CheckBox();
+		
+		CheckBox Answer3ckBox = new CheckBox();
+		
+		CheckBox Answer4ckBox = new CheckBox();
 		
         Insets offset = new Insets(10,10,10,10);
 		
@@ -288,6 +321,25 @@ public class mainPlayGui extends Application {
 		QuestionIOLay.setBottom(returnMainButton);
 		
 		questionIO = new Scene(QuestionIOLay);
+		
+			//Game Layout
+		HBox answer1 = new HBox(Answer1ckBox, Answer1);
+        HBox answer2 = new HBox(Answer2ckBox, Answer2);
+        HBox answer3 = new HBox(Answer3ckBox, Answer3);
+        HBox answer4 = new HBox(Answer4ckBox, Answer4);
+
+		
+		VBox CenterGameLay = new VBox();
+		CenterGameLay.getChildren().addAll(questionLabel, answer1, answer2, answer3, answer4 , nextButton);
+		
+		BorderPane GameLay = new BorderPane();
+		GameLay.setStyle("-fx-background-color: #FFD966;");
+		GameLay.setPadding(offset);
+		GameLay.setBottom(currentScoreLabel);
+		GameLay.setCenter(CenterGameLay);
+		
+		game = new Scene(GameLay);
+		
 		
 		
 		stage.setScene(mainQuiz);
