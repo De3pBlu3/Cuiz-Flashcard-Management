@@ -67,7 +67,7 @@ public class Questions {
 			 card coquestion4 = new card("COM4", "What is the purpose of cache?", "It improves the efficiency of data retrieval; It decreases the speed of the CPU to match the speed of the RAM; It increases the speed of the RAM to match the speed of the CPU; It stores and manipulates data during the execution of instructions", 0, 3, 2);
 			 DB_CardInteract.addCardToDB(coquestion4);
 			 
-			 card coquestion5 = new card("COH5", "What is the difference between a digital computer and a virtual machine?", "yes; no ", 0, 3, 3);
+			 card coquestion5 = new card("COH5", "Which of these operations run?", "ld %r1, %r2; ld [var], %r15; add %r1,      %r2; ld [var], %r2 ", 3, 3, 3);
 			 DB_CardInteract.addCardToDB(coquestion5);
 			 
 			 card coquestion6 = new card("COH6", "What is 4f916 in binary?", "10111110002; 100111110012; 010110110102; 100111110002", 1, 3, 3);
