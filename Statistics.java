@@ -1,23 +1,47 @@
 
 public class Statistics {
+	public static history[] get_player_history(String user_id) {
+
+        return DB_PlayHistory.returnAllHistoryOfUser(user_id);
+	}
+
+	public static history[] get_all_history() {
+		return DB_PlayHistory.returnAllHistory();
+	}
+	public static int[] history_to_scores(history[] player_history) {
+		int[] scores = new int[player_history.length];
+		for (int i = 0; i < player_history.length; i++) {
+			scores[i] = player_history[i].getScore_of_round();
+		}
+		return scores;
+	}
 	public static void main(String[]args) {
 		//At the end of each round:
 		//- The number of rounds played should increase by 1 (a per user measure, each user has their own)
 		//- The Total score should be increased by round score (which is also stored in play history i think)(per user measure)
 		//- The popRoundsPlayed should increase by one (for every user)
 		//- The popTotalScore should also be increased by round score (for every user)
-		int[]playHistory = {8, 2, 5, 12, 65, 9, 29, 89}; //db of previously obtained scores to index through
-		int[]totalPlayHistory = {2, 5, 1, 8, 2, 7, 5, 12, 76, 35, 30};//random data rn
+		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser("sean");
+		int[] sean_historyScore = new int[player_history.length];
+		for (int i = 0; i < player_history.length; i++) {
+			sean_historyScore[i] = player_history[i].getScore_of_round();
+		}
+
+		history[] totalHistory = DB_PlayHistory.returnAllHistory();
+		int[] totalPlayHistory = new int[totalHistory.length];
+		for (int i = 0; i < totalHistory.length; i++) {
+			totalPlayHistory[i] = totalHistory[i].getScore_of_round();
+		}
 		//Population (idk whether theres a special name for the area holding population details
 		
 		//DATA DISPLAY
-		int roundsPlayed = playHistory.length;
+		int roundsPlayed = sean_historyScore.length;
 		int popRoundsPlayed = totalPlayHistory.length;
 		System.out.println("Rounds Played by this User: " + roundsPlayed);
-		System.out.println("Total Score by this User: " + tScore(playHistory));
-		System.out.println("Mean Score: " + (soloMean(tScore(playHistory), roundsPlayed)));	
-		System.out.println("Median Score: " + soloMedian(playHistory));
-		System.out.println("Standard Deviation: " + soloStatndardDev(playHistory, roundsPlayed));
+		System.out.println("Total Score by this User: " + tScore(sean_historyScore));
+		System.out.println("Mean Score: " + (soloMean(tScore(sean_historyScore), roundsPlayed)));
+		System.out.println("Median Score: " + soloMedian(sean_historyScore));
+		System.out.println("Standard Deviation: " + soloStatndardDev(sean_historyScore, roundsPlayed));
 		
 		System.out.println("");
 		
@@ -27,6 +51,33 @@ public class Statistics {
 		System.out.println("Population Median Score: " + popMedian(totalPlayHistory));
 		System.out.println("Population Standard Deviation: " + popStandardDev(totalPlayHistory, popRoundsPlayed));
 		
+	}
+
+	public static stat[] createPlayerStats(String User_ID){
+		// get player history
+		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser(User_ID);
+		int[] player_history_scores = history_to_scores(player_history);
+
+		// create array of stats
+		stat[] player_stats = new stat[5];
+
+		// rounds played
+		player_stats[0] = new stat(User_ID, "number of rounds played", player_history_scores.length);
+
+		// total score
+		player_stats[1] = new stat(User_ID, "total score", tScore(player_history_scores));
+
+		// mean score
+		player_stats[2] = new stat(User_ID, "mean score", soloMean(tScore(player_history_scores), player_history_scores.length));
+
+		// median score
+		player_stats[3] = new stat(User_ID, "median score", soloMedian(player_history_scores));
+
+		// standard deviation
+		player_stats[4] = new stat(User_ID, "standard deviation", soloStatndardDev(player_history_scores, player_history_scores.length));
+
+		return player_stats;
+
 	}
 
 	public static double soloMean(int totalScore, int roundsPlayed) {//*****
@@ -142,7 +193,7 @@ public class Statistics {
 		}
 		double step2 = (double) step1/totalPlayHistory.length;
 		double standDev = (double)Math.pow(step2, 0.5);
-		return Math.round(standDev * 100)/100 ;	
+		return Math.round(standDev * 100)/100 ;
 	}
 	
 
