@@ -31,8 +31,10 @@ import javafx.scene.control.CheckBox;
 
 
 public class mainPlayGui extends Application {
-	Scene mainQuiz, playModes, stats, questionIO, game, home;
+	Scene mainQuiz, playModes, stats, questionIO, game, postGame, home;
 	Stage stage;
+	int i = 0;
+	int answer = 0;
 	public static void main(String[] args) {
 		launch(args);  //method in application class that sets up javafx app (setup)
 
@@ -86,7 +88,7 @@ public class mainPlayGui extends Application {
         logoutButton.setTextAlignment(TextAlignment.CENTER);
         logoutButton.setOnAction(e -> stage.setScene(home));//********************When linked, should go to logon page
         
-        Label currentUserLabel = new Label("Currently Logged in: " + "username" ); //***********Add username display
+        Label currentUserLabel = new Label("Currently Logged in: " + user_ID ); 
         currentUserLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         currentUserLabel.setTextFill(Color.WHITE);
         
@@ -152,7 +154,7 @@ public class mainPlayGui extends Application {
 		CUizPenguinView1.setFitHeight(75);
 		CUizPenguinView1.setImage(CUizPenguin);
 		
-		Label currentUserLabel1 = new Label("Currently Logged in: " + "username" ); //Add username display
+		Label currentUserLabel1 = new Label("Currently Logged in: " + user_ID ); 
         currentUserLabel1.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         currentUserLabel1.setTextFill(Color.WHITE);
 		
@@ -205,20 +207,43 @@ public class mainPlayGui extends Application {
 		
 		//------------------------------------------------------
 			//game controls
-		Label questionLabel = new Label();
+		Label questionLabel = new Label(cards_array[i].Question_content);
 		
-		Label currentScoreLabel = new Label("Current Score:" + "score"); //put real score var
+		Label currentScoreLabel = new Label("Current Score:" + score); 
 		
 		Label Answer1 = new Label("Ans1");
-		
+		Answer1.setText(cards_array[i].Question_answers_arr[0]);
+        
 		Label Answer2 = new Label("Ans2");
+		Answer2.setText(cards_array[i].Question_answers_arr[1]);
 		
 		Label Answer3 = new Label("Ans3");
+		Answer3.setText(cards_array[i].Question_answers_arr[2]);
 		
 		Label Answer4 = new Label("Ans4");
+		 Answer4.setText(cards_array[i].Question_answers_arr[3]);
 		
+		PopUp incorrectP = new PopUp();
+			Label incorrectPLabel = new Label("Incorrect");
+			incorrectP.getContent().add(incorrectPLabel);
+			
+		PopUp correctP = new PopUp();
+			Label correctPLabel = new Label("Correct");
+			correctP.getContent().add(correctPLabel);
+			
+		 
 		Button nextButton = new Button("Next");
-		//nextButton.setOnAction(e -> );
+		nextButton.setOnAction(e -> {showNextItem(questionLabel);
+		if (user_answer == cards_array[i].Question_correct_answer + 1){
+            // if correct, add 1 to score, and add win to scores_db and change score_db by 1
+            DB_ScoreInteract.addWin(user_ID, cards_array[i].card_id);
+            score++; // local score += 1
+            wins++; // local wins += 1
+            CorrectPopUp(correctP, stage);
+		}else {
+			IncorrectPopUp(incorrectP, stage);
+		}
+		});
 		
 		CheckBox Answer1ckBox = new CheckBox();
 		
@@ -227,6 +252,20 @@ public class mainPlayGui extends Application {
 		CheckBox Answer3ckBox = new CheckBox();
 		
 		CheckBox Answer4ckBox = new CheckBox();
+		
+		
+		//postGame contols
+		Label gameOverLabel = new Label("Game Over");
+		
+		Label scoreLabel = new Label("Your total score is:");
+		
+		Label scoreDisplayLabel = new Label(score + "/18"); 
+		
+		Button viewStatsButton = new Button("View Statistics");
+		viewStatsButton.setOnAction(e -> stage.setScene(stats));
+		
+		Button returnToMainButton = new Button("Return to Main Menu");
+		returnToMainButton.setOnAction(e -> stage.setScene(mainQuiz));
 		
         Insets offset = new Insets(10,10,10,10);
 		
@@ -310,6 +349,7 @@ public class mainPlayGui extends Application {
 		
 			//QuestionIO Layout
 		VBox CenterQuestionIOLay = new VBox();
+		CenterQuestionIOLay.setAlignment(Pos.CENTER);
 		CenterQuestionIOLay.getChildren().addAll(questionInTextfield, rightAnswerInTextfield, wrongAnswer1InTextfield, wrongAnswer2InTextfield, wrongAnswer3InTextfield, doneButton);
 
 		
@@ -330,6 +370,7 @@ public class mainPlayGui extends Application {
 
 		
 		VBox CenterGameLay = new VBox();
+		CenterGameLay.setAlignment(Pos.CENTER);
 		CenterGameLay.getChildren().addAll(questionLabel, answer1, answer2, answer3, answer4 , nextButton);
 		
 		BorderPane GameLay = new BorderPane();
@@ -340,8 +381,14 @@ public class mainPlayGui extends Application {
 		
 		game = new Scene(GameLay);
 		
+			//postGame Layout
+		VBox PostGameLay = new VBox();
+		PostGameLay.setAlignment(Pos.CENTER);
+		PostGameLay.getChildren().addAll(gameOverLabel, scoreLabel, scoreDisplayLabel, returnToMainButton, viewStatsButton );
 		
+		postGame = new Scene(PostGameLay);
 		
+		//-------------------------------------------------
 		stage.setScene(mainQuiz);
 		stage.setFullScreen(true);
 		stage.show();
@@ -360,11 +407,59 @@ public class mainPlayGui extends Application {
 	
 	public static void SuccessPopUp(Popup successfulQAddp, Stage stage) {	
 		Timeline popupTimeline = new Timeline( //To store keyframes
-	            new KeyFrame(Duration.seconds(0), e -> { // Change the text field's background color after 2 seconds
+	            new KeyFrame(Duration.seconds(0), e -> { 
 	            	successfulQAddp.show(stage);
 	            }),
-	            new KeyFrame(Duration.seconds(3), e -> {// Revert the color after 3 seconds
+	            new KeyFrame(Duration.seconds(3), e -> {
 	            	successfulQAddp.hide();
+	            }));
+		popupTimeline.setCycleCount(1); //How many times it plays the sequence
+		popupTimeline.playFromStart();
+	}
+	
+    private void showNextItem(Label questionLabel) {
+        if (i < cards_array.length - 1) {
+            i++;
+            questionLabel.setText(cards_array[i].Question_content);
+        }else {
+            	stage.setScene(postGame);
+            }
+    
+        }
+
+    public static int AnswerSelection(boolean Answer1ckBox, boolean Answer2ckBox, boolean Answer3ckBox, boolean Answer4ckBox) {
+    	int user_answer = 9;
+    	if (Answer1ckBox) {
+    		user_answer = 0;
+    	}else if(Answer2ckBox){
+    		user_answer = 1;
+    	}else if(Answer3ckBox) {
+    		user_answer = 2;
+    	}else if(Answer4ckBox) {
+    		user_answer = 3;
+    	}
+    	return user_answer;
+    }
+    
+    public static void CorrectPopUp(Popup correctP, Stage stage) {	
+		Timeline popupTimeline = new Timeline( //To store keyframes
+	            new KeyFrame(Duration.seconds(0), e -> { 
+	            	correctP.show(stage);
+	            }),
+	            new KeyFrame(Duration.seconds(3), e -> {
+	            	correctP.hide();
+	            }));
+		popupTimeline.setCycleCount(1); //How many times it plays the sequence
+		popupTimeline.playFromStart();
+	}
+    
+    public static void IncorrectPopUp(Popup incorrectP, Stage stage) {	
+		Timeline popupTimeline = new Timeline( //To store keyframes
+	            new KeyFrame(Duration.seconds(0), e -> { 
+	            	incorrectP.show(stage);
+	            }),
+	            new KeyFrame(Duration.seconds(3), e -> {
+	            	incorrectP.hide();
 	            }));
 		popupTimeline.setCycleCount(1); //How many times it plays the sequence
 		popupTimeline.playFromStart();
