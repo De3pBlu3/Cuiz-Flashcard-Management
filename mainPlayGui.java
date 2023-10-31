@@ -308,13 +308,16 @@ public class mainPlayGui extends Application {
 		CenterMainQuizLay.setPadding(offset);
 		CenterMainQuizLay.setVgap(10);
 		CenterMainQuizLay.setHgap(5);
+		CenterMainQuizLay.setAlignment(Pos.CENTER);
 		CenterMainQuizLay.setHalignment(playButton, HPos.CENTER);
-		CenterMainQuizLay.setConstraints(statsButton, 1, 2);
+		CenterMainQuizLay.setConstraints(playButton, 1, 0);
 		CenterMainQuizLay.setHalignment(statsButton, HPos.CENTER);
-		CenterMainQuizLay.setConstraints(questionIOButton, 1, 3);
+		CenterMainQuizLay.setConstraints(statsButton, 1, 2);
 		CenterMainQuizLay.setHalignment(questionIOButton, HPos.CENTER);
-		CenterMainQuizLay.setConstraints(logoutButton, 1, 4);
+		CenterMainQuizLay.setConstraints(questionIOButton, 1, 3);
 		CenterMainQuizLay.setHalignment(logoutButton, HPos.CENTER);
+		CenterMainQuizLay.setConstraints(logoutButton, 1, 4);
+		
 		CenterMainQuizLay.getChildren().addAll(playButton, statsButton, questionIOButton, logoutButton);
 
 		
@@ -353,11 +356,11 @@ public class mainPlayGui extends Application {
 		CenterPlayModesLay.setVgap(10);
 		CenterPlayModesLay.setHgap(5);
 		CenterPlayModesLay.setAlignment(Pos.CENTER);
-		CenterPlayModesLay.setConstraints(incDifficultyButton, 0, 1);
+		CenterPlayModesLay.setConstraints(incDifficultyButton, 0, 5);
 		CenterPlayModesLay.setHalignment(incDifficultyButton, HPos.CENTER);
-		CenterPlayModesLay.setConstraints(incScoreButton, 10, 1);
+		CenterPlayModesLay.setConstraints(incScoreButton, 10, 5);
 		CenterPlayModesLay.setHalignment(incScoreButton, HPos.CENTER);
-		CenterPlayModesLay.setConstraints(randomPlayButton, 5, 1);
+		CenterPlayModesLay.setConstraints(randomPlayButton, 5, 5);
 		CenterPlayModesLay.setHalignment(randomPlayButton, HPos.CENTER);
 		CenterPlayModesLay.getChildren().addAll(incDifficultyButton, incScoreButton, randomPlayButton);
 		
@@ -420,7 +423,8 @@ public class mainPlayGui extends Application {
 		
 		postGame = new Scene(PostGameLay);
 
-		
+		stage.show();
+		stage.setScene(mainQuiz);
 		
 	}
 	
