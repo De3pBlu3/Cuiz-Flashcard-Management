@@ -21,7 +21,7 @@ public class Statistics {
 		//- The Total score should be increased by round score (which is also stored in play history i think)(per user measure)
 		//- The popRoundsPlayed should increase by one (for every user)
 		//- The popTotalScore should also be increased by round score (for every user)
-		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser("sean");
+		history[] player_history = DB_PlayHistory.returnAllHistoryOfUser(launcher.user_ID);
 		int[] sean_historyScore = new int[player_history.length];
 		for (int i = 0; i < player_history.length; i++) {
 			sean_historyScore[i] = player_history[i].getScore_of_round();

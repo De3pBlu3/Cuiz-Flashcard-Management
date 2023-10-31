@@ -12,8 +12,7 @@ import javafx.stage.Stage;
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub
 			// init db
-			DB_SetUp.createNewDatabase();
-			DB_CreateTables.CreateStandardTables();
+			Questions.main(args);
 			launch(args);  //method in application class that sets up javafx app (setup)
 		}
 

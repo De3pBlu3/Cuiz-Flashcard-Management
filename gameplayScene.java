@@ -151,8 +151,10 @@ public class gameplayScene extends Scene {
             }
             else {
                 DB_PlayHistory.addHistory(launcher.user_ID, score, wins, losses);
+
                 Stage stage = (Stage) nextButton.getScene().getWindow();
                 primaryStage.setScene(postgameScene.createScene(primaryStage, score));
+                resetScore();
             };
 
             System.out.println(score);
@@ -270,5 +272,11 @@ public class gameplayScene extends Scene {
         popupTimeline.playFromStart();
     }
 
+    public static void resetScore() {
+        score = 0;
+        wins = 0;
+        losses = 0;
+        i = 0;
+    }
 }
 
