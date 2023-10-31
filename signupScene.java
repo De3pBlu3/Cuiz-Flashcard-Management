@@ -54,11 +54,14 @@ public class signupScene extends Scene{
             String confirmPass = confirmPasswordField.getText();
 
             if (Objects.equals(confirmPass, pass)) { //tests whether the passwords  are equal
-                if (DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist
+                // password check
+
+                if (passwordCheck(pass) && DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist, and password is valid
                     System.out.println("New user created successfully");
                     Stage stage = (Stage) createAccountButton.getScene().getWindow();
                     stage.setScene(homeScene.createScene(stage));
-                }else {
+                }
+                else {
                     System.out.println("Something has gone wrong, most likely the username already exists. Try again. "); //user exists and was not stored again
                     failPopUp(existingUserPopup,primaryStage);
                 }
@@ -118,5 +121,13 @@ public class signupScene extends Scene{
                 }));
         popupTimeline.setCycleCount(1); //How many times it plays the sequence
         popupTimeline.playFromStart();
+    }
+
+    public static boolean passwordCheck(String password) {
+        boolean hasUppercase = !password.equals(password.toLowerCase());
+        boolean hasLowercase = !password.equals(password.toUpperCase());
+        boolean hasNumber = password.matches(".*\\d.*");
+        boolean length = password.length() >= 8;
+        return hasUppercase && hasLowercase && hasNumber && length;
     }
 }

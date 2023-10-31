@@ -1,6 +1,3 @@
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application; //Setting up!! Make sure you dont have src folder and that when making package, you click the second option
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -8,25 +5,18 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.geometry.Orientation;
-import javafx.stage.Popup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.util.Duration;
-import java.util.Objects;
-import javafx.scene.Group;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.Label;
 
 public class statGUI extends Scene {
     Scene linePage; // All scenes
     Scene leaderboard;
-
 
 
 
