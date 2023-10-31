@@ -6,25 +6,50 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
 public class loginScene extends Scene{
-    Insets offset = new Insets(10,10,10,10);
+	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 DropShadow dropShadow = new DropShadow();
+	
+	Insets offset = new Insets(10,10,10,10);
     TextField usernameField = new TextField();
 
     Button confirmButton = new Button("Confirm");
-
+    
     Button ReturnsignUpButton = new Button("Back to Sign Up");
+    
 
     PasswordField passwordField = new PasswordField();
 
     public loginScene(Stage primaryStage) {
         super(new VBox(), 450, 250);
+
+        confirmButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        confirmButton.setTextFill(Color.WHITE);
+        confirmButton.setBackground(orangeBackground);
+        confirmButton.setEffect(dropShadow);
+        confirmButton.setTextAlignment(TextAlignment.CENTER);
+        
+        ReturnsignUpButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        ReturnsignUpButton.setTextFill(Color.WHITE);
+        ReturnsignUpButton.setBackground(orangeBackground);
+        ReturnsignUpButton.setEffect(dropShadow);
+        ReturnsignUpButton.setTextAlignment(TextAlignment.CENTER);
 
         //Login layout
         GridPane LoginLay = new GridPane();
