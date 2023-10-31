@@ -89,7 +89,7 @@ public class playmodesScene extends Scene {
         CUizView1.setImage(CUizLogo);
 
 
-        Label currentUserLabel1 = new Label("Currently Logged in: " + "user_ID" );
+        Label currentUserLabel1 = new Label("Currently Logged in: " + launcher.user_ID );
         currentUserLabel1.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         currentUserLabel1.setTextFill(Color.WHITE);
 
