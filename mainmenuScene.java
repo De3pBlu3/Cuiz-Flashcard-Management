@@ -124,10 +124,9 @@ public class mainmenuScene extends Scene {
         MainQuizLay.setCenter(CenterMainQuizLay);
 
         VBox root = (VBox) this.getRoot();
-        VBox.setVgrow(root, Priority.ALWAYS);
         root.getChildren().addAll(MainQuizLay);
 
-
+        
     }
 
     public static mainmenuScene createScene(Stage primaryStage) {

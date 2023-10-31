@@ -72,21 +72,25 @@ public class gameplayScene extends Scene {
         Answer1.setTextFill(Color.WHITE);
         Answer1.setBackground(transparentBackground);
         Answer1.setEffect(dropShadow);
+       
         
         Answer2.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         Answer2.setTextFill(Color.WHITE);
         Answer2.setBackground(transparentBackground);
         Answer2.setEffect(dropShadow);
         
+        
         Answer3.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         Answer3.setTextFill(Color.WHITE);
         Answer3.setBackground(transparentBackground);
         Answer3.setEffect(dropShadow);
+     
 
         Answer4.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         Answer4.setTextFill(Color.WHITE);
         Answer4.setBackground(transparentBackground);
         Answer4.setEffect(dropShadow);
+       
         
         incorrectPLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         incorrectPLabel.setTextFill(Color.WHITE);
@@ -94,11 +98,13 @@ public class gameplayScene extends Scene {
         incorrectPLabel.setEffect(dropShadow);
         incorrectPLabel.setTextAlignment(TextAlignment.CENTER);
         
+        
         currentScoreLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         currentScoreLabel.setTextFill(Color.WHITE);
         currentScoreLabel.setBackground(transparentBackground);
         currentScoreLabel.setEffect(dropShadow);
         currentScoreLabel.setTextAlignment(TextAlignment.CENTER);
+       
         
         correctPLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         correctPLabel.setTextFill(Color.WHITE);
@@ -106,11 +112,13 @@ public class gameplayScene extends Scene {
         correctPLabel.setEffect(dropShadow);
         correctPLabel.setTextAlignment(TextAlignment.CENTER);
         
+        
         nextButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         nextButton.setTextFill(Color.WHITE);
         nextButton.setBackground(orangeBackground);
         nextButton.setEffect(dropShadow);
         nextButton.setTextAlignment(TextAlignment.CENTER);
+        
         
         if (gamemodeInt == 0) {
             // difficulty
@@ -129,7 +137,12 @@ public class gameplayScene extends Scene {
         }
 //random
         Label questionLabel = new Label(cards_array[i].Question_content);
-
+        questionLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        questionLabel.setTextFill(Color.WHITE);
+        questionLabel.setBackground(orangeBackground);
+        questionLabel.setEffect(dropShadow);
+        questionLabel.setTextAlignment(TextAlignment.CENTER);
+        
         nextButton.setOnAction(e -> {
         	Answer3ckBox.setVisible(true);
             Answer4ckBox.setVisible(true);
