@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class gameplayScene extends Scene {
-	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
 	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
 	 DropShadow dropShadow = new DropShadow();
 	
@@ -131,7 +131,9 @@ public class gameplayScene extends Scene {
         Label questionLabel = new Label(cards_array[i].Question_content);
 
         nextButton.setOnAction(e -> {
-            if (AnswerSelection(Answer1ckBox, Answer2ckBox, Answer3ckBox, Answer4ckBox) == cards_array[i].Question_correct_answer){
+        	Answer3ckBox.setVisible(true);
+            Answer4ckBox.setVisible(true);
+        	if (AnswerSelection(Answer1ckBox, Answer2ckBox, Answer3ckBox, Answer4ckBox) == cards_array[i].Question_correct_answer){
                 // if correct, add 1 to score, and add win to scores_db and change score_db by 1
                 DB_ScoreInteract.addWin(launcher.user_ID, cards_array[i].card_id);
                 score += 1; // local score += 1
@@ -160,24 +162,28 @@ public class gameplayScene extends Scene {
             System.out.println(score);
 
             questionLabel.setText(cards_array[i].Question_content);
+            currentScoreLabel.setText("Current Score:" + score);
             //** if array length
             if (cards_array[i].Question_answers_arr.length == 4) {
             	Answer1.setText(cards_array[i].Question_answers_arr[0]);
             	Answer2.setText(cards_array[i].Question_answers_arr[1]);
             	Answer3.setText(cards_array[i].Question_answers_arr[2]);
             	Answer4.setText(cards_array[i].Question_answers_arr[3]);
-            	currentScoreLabel.setText("Current Score:" + score);
+            	
             	
             }else if (cards_array[i].Question_answers_arr.length == 3) {
             	Answer1.setText(cards_array[i].Question_answers_arr[0]);
             	Answer2.setText(cards_array[i].Question_answers_arr[1]);
             	Answer3.setText(cards_array[i].Question_answers_arr[2]);
-            	Answer4ckBox.isDisabled();
+            	Answer4.setText(" ");
+            	Answer4ckBox.setVisible(false);
         	}else{
             	Answer1.setText(cards_array[i].Question_answers_arr[0]);
                 Answer2.setText(cards_array[i].Question_answers_arr[1]);
-                Answer3ckBox.isDisabled();
-                Answer4ckBox.isDisabled();
+                Answer3.setText(" ");                
+                Answer4.setText(" ");                
+                Answer3ckBox.setVisible(false);
+                Answer4ckBox.setVisible(false);
             }
         });
 
