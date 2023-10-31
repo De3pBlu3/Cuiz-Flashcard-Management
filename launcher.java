@@ -36,20 +36,3 @@ import javafx.stage.Stage;
 	
 	
 //	Ellice 0-216
-/*	 
-  	- Stage = entire window
-	- Scene = everything inside window
-	- Button = an object
-	- buttonName.setText("text on button"
-	- .setOnAction(this) = envokes handle method
-	- StackPane = object, simple layout
-	- Scene = object, parameters, first one is layout name and next two is size
-	- .setScene(sceneName) = primary stage command
-	- .show() = primary stage command, displays scene
-	- implements EventHandler<ActionEvent> = tells it what to do when an event happens
-	- event.getSource() = checks what the source of the event was 
-	OR 
-	- .setOnAction(e -> THING TO DO) = e replaces the handle method, lambda
-	- Label = text
-	- .setStyle 
-*/
