@@ -78,30 +78,8 @@ public class Questions {
 			//---------------------------------------------------------------------------------------------------------------
 			 
 	}
-	/*
-	public static void RunQuiz() {
-		Scanner in = new Scanner(System.in);
-		System.out.println("Please choose a gamemode: ");
-		//Insert gamemodes here
-		
-		int WrongAns = 0;
-		int RightAns = 0;
-
-		System.out.println(DB_CardInteract.returnCardByID(CSE1));
-		System.out.println(csquestion1.answer[0]);
-		System.out.println(csquestion1.answer[1]);
-		System.out.println(csquestion1.answer[2]);
-		System.out.println(csquestion1.answer[3]);
-		
-		String ans = in.nextLine();
-		if (ans = correct_answer_index) {
-			System.out.println("Correct!");
-			WrongAns ++;
-		} else {
-			System.out.println("Incorrect");
-			RightAns ++;
-		}
-		}*/
+	
+	
 
 	
 
