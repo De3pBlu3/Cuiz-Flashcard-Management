@@ -2,6 +2,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -39,21 +40,31 @@ public class loginScene extends Scene{
     public loginScene(Stage primaryStage) {
         super(new VBox(), 450, 250);
 
-        confirmButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        confirmButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         confirmButton.setTextFill(Color.WHITE);
         confirmButton.setBackground(orangeBackground);
         confirmButton.setEffect(dropShadow);
         confirmButton.setTextAlignment(TextAlignment.CENTER);
         
-        ReturnsignUpButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        ReturnsignUpButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         ReturnsignUpButton.setTextFill(Color.WHITE);
         ReturnsignUpButton.setBackground(orangeBackground);
         ReturnsignUpButton.setEffect(dropShadow);
         ReturnsignUpButton.setTextAlignment(TextAlignment.CENTER);
+        ReturnsignUpButton.setAlignment(Pos.CENTER);
 
+        usernameField.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        usernameField.setEffect(dropShadow);
+        usernameField.setAlignment(Pos.CENTER);
+        
+        passwordField.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        passwordField.setEffect(dropShadow);
+        passwordField.setAlignment(Pos.CENTER);
+        
         //Login layout
         GridPane LoginLay = new GridPane();
         //General layout settings
+        LoginLay.setStyle("-fx-background-color: #FFD966;");
         LoginLay.setPadding(offset);
         LoginLay.setVgap(10);
         LoginLay.setHgap(5);

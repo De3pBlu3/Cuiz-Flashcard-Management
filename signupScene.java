@@ -6,9 +6,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -17,7 +25,11 @@ import java.util.Objects;
 
 
 public class signupScene extends Scene{
-    Insets offset = new Insets(10,10,10,10);
+	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 DropShadow dropShadow = new DropShadow();
+	 
+	Insets offset = new Insets(10,10,10,10);
 
     Button ReturnloginButton = new Button("Back to Login Page");
     Button createAccountButton = new Button("Create Account");
@@ -30,8 +42,34 @@ public class signupScene extends Scene{
     public signupScene(Stage primaryStage) {
         super(new VBox(), 450, 250);
 
+        ReturnloginButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        ReturnloginButton.setTextFill(Color.WHITE);
+        ReturnloginButton.setBackground(orangeBackground);
+        ReturnloginButton.setEffect(dropShadow);
+        ReturnloginButton.setTextAlignment(TextAlignment.CENTER);
+        
+        createAccountButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        createAccountButton.setTextFill(Color.WHITE);
+        createAccountButton.setBackground(orangeBackground);
+        createAccountButton.setEffect(dropShadow);
+        createAccountButton.setTextAlignment(TextAlignment.CENTER);
+        createAccountButton.setAlignment(Pos.CENTER);
+
+        newUsernameField.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        newUsernameField.setEffect(dropShadow);
+        newUsernameField.setAlignment(Pos.CENTER);
+        
+        newPasswordField.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        newPasswordField.setEffect(dropShadow);
+        newPasswordField.setAlignment(Pos.CENTER);
+        
+        confirmPasswordField.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
+        confirmPasswordField.setEffect(dropShadow);
+        confirmPasswordField.setAlignment(Pos.CENTER);
+        
         GridPane SignUpLay = new GridPane();
         //General layout settings
+        SignUpLay.setStyle("-fx-background-color: #FFD966;");
         SignUpLay.setPadding(offset);
         SignUpLay.setVgap(10);
         SignUpLay.setHgap(5);
