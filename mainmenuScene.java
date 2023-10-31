@@ -34,8 +34,8 @@ public class mainmenuScene extends Scene {
 
 
     public mainmenuScene(Stage primaryStage) {
-        super(new VBox(), 440, 250);
-
+        super((new VBox()));
+        
         playButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 40));
         playButton.setTextFill(Color.WHITE);
         playButton.setBackground(transparentBackground);
@@ -69,7 +69,10 @@ public class mainmenuScene extends Scene {
         logoutButton.setBackground(transparentBackground);
         logoutButton.setEffect(dropShadow);
         logoutButton.setTextAlignment(TextAlignment.CENTER);
-//        logoutButton.setOnAction(e -> stage.setScene(home));//********************When linked, should go to logon page
+        logoutButton.setOnAction(e -> {
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        primaryStage.setScene(loginScene.createScene(stage));
+        });
         currentUserLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
         currentUserLabel.setTextFill(Color.WHITE);
         trademarkLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 10));
@@ -80,7 +83,7 @@ public class mainmenuScene extends Scene {
         CUizPenguinView.setFitHeight(75);
         CUizPenguinView.setImage(CUizPenguin);
         CUizView.setFitWidth(440);
-        CUizView.setFitHeight(350);
+        CUizView.setFitHeight(250);
         CUizView.setImage(CUizLogo);
 
 
@@ -89,6 +92,8 @@ public class mainmenuScene extends Scene {
         CenterMainQuizLay.setPadding(offset);
         CenterMainQuizLay.setVgap(10);
         CenterMainQuizLay.setHgap(5);
+        CenterMainQuizLay.setAlignment(Pos.CENTER);
+        CenterMainQuizLay.setConstraints(playButton, 1, 0);
         CenterMainQuizLay.setHalignment(playButton, HPos.CENTER);
         CenterMainQuizLay.setConstraints(statsButton, 1, 2);
         CenterMainQuizLay.setHalignment(statsButton, HPos.CENTER);
@@ -96,6 +101,7 @@ public class mainmenuScene extends Scene {
         CenterMainQuizLay.setHalignment(questionIOButton, HPos.CENTER);
         CenterMainQuizLay.setConstraints(logoutButton, 1, 4);
         CenterMainQuizLay.setHalignment(logoutButton, HPos.CENTER);
+        
         CenterMainQuizLay.getChildren().addAll(playButton, statsButton, questionIOButton, logoutButton);
 
 
@@ -118,6 +124,7 @@ public class mainmenuScene extends Scene {
         MainQuizLay.setCenter(CenterMainQuizLay);
 
         VBox root = (VBox) this.getRoot();
+        VBox.setVgrow(root, Priority.ALWAYS);
         root.getChildren().addAll(MainQuizLay);
 
 

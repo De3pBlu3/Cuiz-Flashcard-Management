@@ -6,27 +6,46 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class gameplayScene extends Scene {
-
+	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+	 DropShadow dropShadow = new DropShadow();
+	
     static int gamemodeInt;
     Label Answer1 = new Label("Ans1");
+    
     Label Answer2 = new Label("Ans2");
+    
     Label Answer3 = new Label("Ans3");
+        
     Label Answer4 = new Label("Ans4");
+    
     Popup incorrectP = new Popup();
+    
     Label incorrectPLabel = new Label("Incorrect");
+    
     Popup correctP = new Popup();
     Label correctPLabel = new Label("Correct");
+    
+    
     Insets offset = new Insets(10,10,10,10);
 
     CheckBox Answer1ckBox = new CheckBox();
@@ -39,14 +58,60 @@ public class gameplayScene extends Scene {
     static int i = 0;
 
     Label currentScoreLabel = new Label("Current Score:" + score);
+    
+    
     Button nextButton = new Button("Next");
-
+    
+//****
     card[] cards_array;
 
     public gameplayScene(Stage primaryStage) {
         super(new VBox(), 440, 350);
 
+        Answer1.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        Answer1.setTextFill(Color.WHITE);
+        Answer1.setBackground(transparentBackground);
+        Answer1.setEffect(dropShadow);
+        
+        Answer2.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        Answer2.setTextFill(Color.WHITE);
+        Answer2.setBackground(transparentBackground);
+        Answer2.setEffect(dropShadow);
+        
+        Answer3.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        Answer3.setTextFill(Color.WHITE);
+        Answer3.setBackground(transparentBackground);
+        Answer3.setEffect(dropShadow);
 
+        Answer4.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        Answer4.setTextFill(Color.WHITE);
+        Answer4.setBackground(transparentBackground);
+        Answer4.setEffect(dropShadow);
+        
+        incorrectPLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        incorrectPLabel.setTextFill(Color.WHITE);
+        incorrectPLabel.setBackground(orangeBackground);
+        incorrectPLabel.setEffect(dropShadow);
+        incorrectPLabel.setTextAlignment(TextAlignment.CENTER);
+        
+        currentScoreLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        currentScoreLabel.setTextFill(Color.WHITE);
+        currentScoreLabel.setBackground(transparentBackground);
+        currentScoreLabel.setEffect(dropShadow);
+        currentScoreLabel.setTextAlignment(TextAlignment.CENTER);
+        
+        correctPLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        correctPLabel.setTextFill(Color.WHITE);
+        correctPLabel.setBackground(orangeBackground);
+        correctPLabel.setEffect(dropShadow);
+        correctPLabel.setTextAlignment(TextAlignment.CENTER);
+        
+        nextButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+        nextButton.setTextFill(Color.WHITE);
+        nextButton.setBackground(orangeBackground);
+        nextButton.setEffect(dropShadow);
+        nextButton.setTextAlignment(TextAlignment.CENTER);
+        
         if (gamemodeInt == 0) {
             // difficulty
             cards_array = DB_CardInteract.allCardsIncreasingDifficulty();
@@ -93,12 +158,25 @@ public class gameplayScene extends Scene {
             System.out.println(score);
 
             questionLabel.setText(cards_array[i].Question_content);
-            Answer1.setText(cards_array[i].Question_answers_arr[0]);
-            Answer2.setText(cards_array[i].Question_answers_arr[1]);
-            Answer3.setText(cards_array[i].Question_answers_arr[2]);
-            Answer4.setText(cards_array[i].Question_answers_arr[3]);
-            currentScoreLabel.setText("Current Score:" + score);
-
+            //** if array length
+            if (cards_array[i].Question_answers_arr.length == 4) {
+            	Answer1.setText(cards_array[i].Question_answers_arr[0]);
+            	Answer2.setText(cards_array[i].Question_answers_arr[1]);
+            	Answer3.setText(cards_array[i].Question_answers_arr[2]);
+            	Answer4.setText(cards_array[i].Question_answers_arr[3]);
+            	currentScoreLabel.setText("Current Score:" + score);
+            	
+            }else if (cards_array[i].Question_answers_arr.length == 3) {
+            	Answer1.setText(cards_array[i].Question_answers_arr[0]);
+            	Answer2.setText(cards_array[i].Question_answers_arr[1]);
+            	Answer3.setText(cards_array[i].Question_answers_arr[2]);
+            	Answer4ckBox.isDisabled();
+        	}else{
+            	Answer1.setText(cards_array[i].Question_answers_arr[0]);
+                Answer2.setText(cards_array[i].Question_answers_arr[1]);
+                Answer3ckBox.isDisabled();
+                Answer4ckBox.isDisabled();
+            }
         });
 
     Answer1.setText(cards_array[i].Question_answers_arr[0]);
@@ -125,8 +203,11 @@ public class gameplayScene extends Scene {
 
     VBox root = (VBox) this.getRoot();
     root.getChildren().addAll(GameLay);
+    
 }
     public static gameplayScene createScene(Stage primaryStage) {
+    	
+        
         return new gameplayScene(primaryStage);
     }
 
@@ -170,7 +251,7 @@ public class gameplayScene extends Scene {
                 new KeyFrame(Duration.seconds(0), e -> {
                     correctP.show(stage);
                 }),
-                new KeyFrame(Duration.seconds(3), e -> {
+                new KeyFrame(Duration.seconds(2), e -> {
                     correctP.hide();
                 }));
         popupTimeline.setCycleCount(1); //How many times it plays the sequence
@@ -182,7 +263,7 @@ public class gameplayScene extends Scene {
                 new KeyFrame(Duration.seconds(0), e -> {
                     incorrectP.show(stage);
                 }),
-                new KeyFrame(Duration.seconds(3), e -> {
+                new KeyFrame(Duration.seconds(2), e -> {
                     incorrectP.hide();
                 }));
         popupTimeline.setCycleCount(1); //How many times it plays the sequence
