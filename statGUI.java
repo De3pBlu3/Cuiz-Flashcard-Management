@@ -1,3 +1,4 @@
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -8,6 +9,10 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -125,6 +130,8 @@ public class statGUI extends Scene {
         });
 
 
+
+
         // create stats table, will contain stats for the user (mean, median, standard deviation)
         TableView statsTable = new TableView();
         // make table not editable
@@ -162,6 +169,16 @@ public class statGUI extends Scene {
 
         // create a tabpane
         TabPane tabpane = new TabPane();
+// add button to the right of the tabplane
+        Button backButton = new Button("Back");
+//        backButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
+//        backButton.setTextFill(Color.black);
+        backButton.setTextAlignment(TextAlignment.CENTER);
+        backButton.setOnAction(e -> {
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            primaryStage.setScene(mainmenuScene.createScene(stage));
+        });
+
 
         // create Tab
         Tab tab = new Tab("Leaderboard");
@@ -185,12 +202,24 @@ public class statGUI extends Scene {
         tab3.closableProperty().setValue(false);
         // add tab
         tabpane.getTabs().add(tab3);
-//
 
+        // anchor pane
+        AnchorPane anchorPane = new AnchorPane();
+
+        // add button to the right of the tabplane
+        AnchorPane.setTopAnchor(tabpane, 2.0);
+        AnchorPane.setLeftAnchor(tabpane, 2.0);
+        AnchorPane.setRightAnchor(tabpane, 2.0);
+
+        AnchorPane.setTopAnchor(backButton, 5.0);
+        AnchorPane.setRightAnchor(backButton, 5.0);
+//        tabpane.setStyle("-fx-padding: 2 0 0 50;");
+
+        anchorPane.getChildren().addAll(tabpane, backButton);
 
         // -----------------------------------------------------------------------------------------------//
         VBox root = (VBox) this.getRoot();
-        root.getChildren().addAll(tabpane);
+        root.getChildren().addAll(anchorPane);
 
     }
 
