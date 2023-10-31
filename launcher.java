@@ -8,8 +8,12 @@ import javafx.stage.Stage;
 
 	public class launcher extends Application {
 
+		static String user_ID;
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub
+			// init db
+			DB_SetUp.createNewDatabase();
+			DB_CreateTables.CreateStandardTables();
 			launch(args);  //method in application class that sets up javafx app (setup)
 		}
 

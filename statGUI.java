@@ -23,16 +23,13 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Label;
 
-public class statGUI extends Application {
+public class statGUI extends Scene {
     Scene linePage; // All scenes
     Scene leaderboard;
 
 
 
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        launch(args);  //method in application class that sets up javafx app (setup)
-    }
+
     public static LineChart<String, Number> create_line_chart_player_history(String user_id) {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Date");
@@ -71,100 +68,22 @@ public class statGUI extends Application {
         return(lineChart);
     }
 
-    @Override
-    public void start(Stage window) throws Exception {
-        String user_id = "sean";
-        window.setTitle("Cuiz stats"); //Window title
+    public statGUI(Stage primaryStage) {
+        super(new VBox(), 440, 250);
+        String user_id = launcher.user_ID;
 
-        //Labels and buttons creation
-        //------------------------------------------------------------------------------------//
-//        Label Intro = new Label("Welcome to Cuiz stats");
-
-//        Popup existingUserPopup = new Popup() ;
-//
-//        Label existingUserPLabel = new Label("Something has gone wrong, most likely the username already exists. Try again. ");
-//        existingUserPLabel.setStyle("-fx-background-color:#D5D5D5; -fx-font-size:10;");
-//        existingUserPopup.getContent().add(existingUserPLabel);
-//
-//        TextField usernameField = new TextField();
-//        usernameField.setPromptText("Username");
-//
-//        TextField newUsernameField = new TextField();
-//        newUsernameField.setPromptText("New username");
-//
-//        PasswordField passwordField = new PasswordField();
-//        passwordField.setPromptText("Password");
-//
-//        PasswordField newPasswordField = new PasswordField();
-//        newPasswordField.setPromptText("New password");
-//
-//        PasswordField confirmPasswordField = new PasswordField();
-//        confirmPasswordField.setPromptText("Confirm password");
-//
-//        Button confirmButton = new Button("Confirm");
-//        confirmButton.setOnAction(e -> {
-//            String user = usernameField.getText(); 		//Changes user input into String to check in db
-//            String pass = passwordField.getText();
-//
-//            if (DB_UserInteract.loginCheck(user, pass)== false) { 	//Checks whether user name and password exists
-//                colorChange(usernameField, passwordField, confirmPasswordField, newPasswordField);			//If it doesnt exist then go red
-//                System.out.print("Username or password does not match. Try again"); //loop continues
-//            }else {
-//                System.out.print("Successful login");
-//                window.setScene(mainQuiz);
-//                window.setFullScreen(true);
-//            }
-//        });
-//
-//        Button createAccountButton = new Button("Create Account");
-//        createAccountButton.setOnAction(e -> {
-//            String user = newUsernameField.getText(); 		//Changes user input into String to check in db
-//            String pass = newPasswordField.getText();
-//            String confirmPass = confirmPasswordField.getText();
-//
-//            if (Objects.equals(confirmPass, pass)) { //tests whether the passwords  are equal
-//                if (DB_UserInteract.insert(user, pass)){ // new user name and password stored if it doesn't exist
-//                    System.out.println("New user created successfully");
-//                    window.setScene(home);
-//                }else {
-//                    System.out.println("Something has gone wrong, most likely the username already exists. Try again. "); //user exists and was not stored again
-//                    failPopUp(existingUserPopup,window);
-//                }
-//            }else {
-//                System.out.println("Passwords do not match.. ");
-//                colorChange(usernameField, passwordField, confirmPasswordField, newPasswordField);
-//
-//            }
-//
-//            //window.setScene(Fail);
-//        });
-//
-//        Button loginButton = new Button("Login");
-//        loginButton.setOnAction(e -> window.setScene(login));
-//        Button signUpButton = new Button("Sign Up");
-//        signUpButton.setOnAction(e -> window.setScene(signUp));
-//
-//        Button ReturnloginButton = new Button("Back to Login Page");
-//        ReturnloginButton.setOnAction(e -> window.setScene(login));
-//
-//        Button ReturnsignUpButton = new Button("Back to Sign Up");
-//        ReturnsignUpButton.setOnAction(e -> window.setScene(signUp));
-//
-//        Button ReturnhomeButton = new Button("Return to Home");
-//        ReturnhomeButton.setOnAction(e -> window.setScene(home));
 
         // create vertical seperator
         Separator separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
 
-        Insets offset = new Insets(10,10,10,10);
+        Insets offset = new Insets(10, 10, 10, 10);
 
 
         // x axis is date
         // y axis is score
         //
         // line chart
-
 
 
         GridPane chatLayout = getChartGrid(offset, separator, user_id);
@@ -214,7 +133,6 @@ public class statGUI extends Application {
             leaderboardLay.getChildren().add(lineChart);
 
         });
-
 
 
         // create stats table, will contain stats for the user (mean, median, standard deviation)
@@ -281,14 +199,11 @@ public class statGUI extends Application {
 
 
         // -----------------------------------------------------------------------------------------------//
-
-        linePage = new Scene(tabpane, 440, 250);//Homepage setup
-
-        //Show the GUI
-        window.setScene(linePage);
-        window.show();
+        VBox root = (VBox) this.getRoot();
+        root.getChildren().addAll(tabpane);
 
     }
+
 
         private static GridPane getChartGrid(Insets offset, Separator separator, String user_id) {
         LineChart<String, Number> lineChart_player = create_line_chart_player_history(user_id);
@@ -310,6 +225,10 @@ public class statGUI extends Application {
         homeLay.setConstraints(lineChart_pop, 2, 2);
         homeLay.getChildren().addAll(lineChart_player, separator, lineChart_pop);
         return homeLay;
+    }
+
+    public static statGUI createScene(Stage primaryStage) {
+        return new statGUI(primaryStage);
     }
 
 }

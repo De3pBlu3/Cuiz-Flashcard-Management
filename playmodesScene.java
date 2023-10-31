@@ -51,9 +51,11 @@ public class playmodesScene extends Scene {
         incDifficultyButton.setBackground(transparentBackground);
         incDifficultyButton.setEffect(dropShadow);
         incDifficultyButton.setTextAlignment(TextAlignment.CENTER);
-//        incDifficultyButton.setOnAction(e -> {stage.setScene(game);
-            //increasingDifficulty_play(user_ID);
-//        });
+        incDifficultyButton.setOnAction(e -> {
+            Stage stage = (Stage) incDifficultyButton.getScene().getWindow();
+            gameplayScene.gamemodeInt = 0;
+            primaryStage.setScene(gameplayScene.createScene(stage));
+        });
 
         Button incScoreButton = new Button("Increasing\n"
                 + "Score");
@@ -62,9 +64,11 @@ public class playmodesScene extends Scene {
         incScoreButton.setBackground(transparentBackground);
         incScoreButton.setEffect(dropShadow);
         incScoreButton.setTextAlignment(TextAlignment.CENTER);
-//        incScoreButton.setOnAction(e -> {stage.setScene(game);
-            //increasingScore_play(user_ID);  uncomment once connected
-//        });
+        incScoreButton.setOnAction(e -> {
+        Stage stage = (Stage) incScoreButton.getScene().getWindow();
+            gameplayScene.gamemodeInt = 1;
+            primaryStage.setScene(gameplayScene.createScene(stage));
+    });
 
         Button randomPlayButton = new Button("Random\n"
                 + "Play");
@@ -73,9 +77,11 @@ public class playmodesScene extends Scene {
         randomPlayButton.setBackground(transparentBackground);
         randomPlayButton.setEffect(dropShadow);
         randomPlayButton.setTextAlignment(TextAlignment.CENTER);
-//        randomPlayButton.setOnAction(e -> {stage.setScene(game);
-            //random_play(user_ID); uncomment once connected
-//        });
+        randomPlayButton.setOnAction(e -> {
+            Stage stage = (Stage) randomPlayButton.getScene().getWindow();
+            gameplayScene.gamemodeInt = 2;
+            primaryStage.setScene(gameplayScene.createScene(stage));
+        });
 
         ImageView CUizView1 = new ImageView();
         CUizView1.setFitWidth(50);

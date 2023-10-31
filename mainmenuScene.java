@@ -24,7 +24,7 @@ public class mainmenuScene extends Scene {
     Button statsButton = new Button("Play statistics");
     Button questionIOButton = new Button("Input your own questions");
     Button logoutButton = new Button("Log out");
-    Label currentUserLabel = new Label("Currently Logged in: " + "user_ID" );
+    Label currentUserLabel = new Label("Currently Logged in: " + launcher.user_ID );
     Label trademarkLabel = new Label("Made by Jack Casey and Ellice Nelson\r\n"
             + "“CUiz” is a registered trademark ™\r\n");
     Image CUizLogo = new Image("CUiz Logo.png");
@@ -50,7 +50,10 @@ public class mainmenuScene extends Scene {
         statsButton.setBackground(transparentBackground);
         statsButton.setEffect(dropShadow);
         playButton.setTextAlignment(TextAlignment.CENTER);
-//        statsButton.setOnAction(e -> stage.setScene(stats));
+        statsButton.setOnAction(e -> {
+            Stage stage = (Stage) statsButton.getScene().getWindow();
+            primaryStage.setScene(statGUI.createScene(stage));
+        });
         questionIOButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         questionIOButton.setTextFill(Color.WHITE);
         questionIOButton.setBackground(transparentBackground);

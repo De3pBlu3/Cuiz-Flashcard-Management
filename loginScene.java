@@ -57,6 +57,7 @@ public class loginScene extends Scene{
                 System.out.print("Username or password does not match. Try again"); //loop continues
             }else {
                 System.out.print("Successful login");
+                launcher.user_ID = user;
                 Stage stage = (Stage) confirmButton.getScene().getWindow();
                 stage.setScene(mainmenuScene.createScene(stage));
                 stage.setFullScreen(true);
