@@ -51,7 +51,7 @@ public class mainmenuScene extends Scene {
         statsButton.setEffect(dropShadow);
         playButton.setTextAlignment(TextAlignment.CENTER);
         statsButton.setOnAction(e -> {
-            Stage stage = (Stage) statsButton.getScene().getWindow();
+        	Stage stage = (Stage) statsButton.getScene().getWindow();
             primaryStage.setScene(statGUI.createScene(stage));
         });
         questionIOButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));

@@ -82,7 +82,7 @@ public class statGUI extends Scene {
 
 
         GridPane chatLayout = getChartGrid(offset, separator, user_id);
-
+        chatLayout.setStyle("-fx-background-color: #FFD966;");
         // create table view
         TableView table = new TableView();
         // make table not editable
@@ -95,7 +95,9 @@ public class statGUI extends Scene {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn userNameCol = new TableColumn("Username");
+        userNameCol.setStyle("-fx-background-color: #FFE699;");
         TableColumn scoreCol = new TableColumn("Score");
+        scoreCol.setStyle("-fx-background-color: #FBE29B;");
         table.getColumns().addAll(userNameCol, scoreCol);
 
         // create table data
@@ -107,6 +109,7 @@ public class statGUI extends Scene {
         }
 
         GridPane leaderboardLay = new GridPane();
+        leaderboardLay.setStyle("-fx-background-color: #FFD966;");
         // add table to the layout
         leaderboardLay.setConstraints(table, 0, 0);
         leaderboardLay.getChildren().add(table);
@@ -134,6 +137,7 @@ public class statGUI extends Scene {
 
         // create stats table, will contain stats for the user (mean, median, standard deviation)
         TableView statsTable = new TableView();
+        statsTable.setStyle("-fx-background-color: #FFD966;");
         // make table not editable
         statsTable.setEditable(false);
 
@@ -144,7 +148,9 @@ public class statGUI extends Scene {
         statsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn statNameCol = new TableColumn("Stat");
+        statNameCol.setStyle("-fx-background-color: #FFD966;");
         TableColumn statValueCol = new TableColumn("Value");
+        statValueCol.setStyle("-fx-background-color: #FFD966;");
         statsTable.getColumns().addAll(statNameCol, statValueCol);
 
         // create table data
@@ -160,6 +166,7 @@ public class statGUI extends Scene {
 
         // add table to the layout
         GridPane personalStatLayout = new GridPane();
+        personalStatLayout.setStyle("-fx-background-color: #FFD966;");
         // add table to the layout
         personalStatLayout.setConstraints(statsTable, 0, 0);
         personalStatLayout.getChildren().add(statsTable);
