@@ -39,7 +39,7 @@ public class postgameScene extends Scene {
             scoreLabel.setTextAlignment(TextAlignment.CENTER);
             scoreLabel.setAlignment(Pos.CENTER);
 
-            Label scoreDisplayLabel = new Label(score + "/18");
+            Label scoreDisplayLabel = new Label(""+ score + "");
             scoreDisplayLabel.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 15));
             scoreDisplayLabel.setTextFill(Color.WHITE);
             scoreDisplayLabel.setBackground(transparentBackground);
@@ -51,6 +51,7 @@ public class postgameScene extends Scene {
             viewStatsButton.setOnAction(e -> {
                     Stage stage = (Stage) viewStatsButton.getScene().getWindow();
             primaryStage.setScene(statGUI.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
             viewStatsButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 15));
             viewStatsButton.setTextFill(Color.WHITE);
@@ -62,6 +63,7 @@ public class postgameScene extends Scene {
             returnToMainButton.setOnAction(e -> {
                 Stage stage = (Stage) returnToMainButton.getScene().getWindow();
             primaryStage.setScene(mainmenuScene.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
             returnToMainButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 15));
             returnToMainButton.setTextFill(Color.WHITE);

@@ -184,6 +184,7 @@ public class statGUI extends Scene {
         backButton.setOnAction(e -> {
             Stage stage = (Stage) backButton.getScene().getWindow();
             primaryStage.setScene(mainmenuScene.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
 
 

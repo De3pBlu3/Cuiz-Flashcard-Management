@@ -169,6 +169,7 @@ public class gameplayScene extends Scene {
 
                 Stage stage = (Stage) nextButton.getScene().getWindow();
                 primaryStage.setScene(postgameScene.createScene(primaryStage, score));
+                primaryStage.setFullScreen(true);
                 resetScore();
             };
 

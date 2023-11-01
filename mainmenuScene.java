@@ -44,6 +44,7 @@ public class mainmenuScene extends Scene {
         playButton.setOnAction(e -> {
             Stage stage = (Stage) playButton.getScene().getWindow();
             primaryStage.setScene(playmodesScene.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
         statsButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         statsButton.setTextFill(Color.WHITE);
@@ -53,6 +54,7 @@ public class mainmenuScene extends Scene {
         statsButton.setOnAction(e -> {
         	Stage stage = (Stage) statsButton.getScene().getWindow();
             primaryStage.setScene(statGUI.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
         questionIOButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));
         questionIOButton.setTextFill(Color.WHITE);
@@ -62,6 +64,7 @@ public class mainmenuScene extends Scene {
         questionIOButton.setOnAction(e -> {
         Stage stage = (Stage) questionIOButton.getScene().getWindow();
         primaryStage.setScene(questionioScene.createScene(stage));
+        primaryStage.setFullScreen(true);
         });
 
         logoutButton.setFont(Font.font("ADLam Display", FontWeight.NORMAL, 20));

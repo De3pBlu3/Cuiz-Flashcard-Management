@@ -55,6 +55,7 @@ public class playmodesScene extends Scene {
             Stage stage = (Stage) incDifficultyButton.getScene().getWindow();
             gameplayScene.gamemodeInt = 0;
             primaryStage.setScene(gameplayScene.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
 
         Button incScoreButton = new Button("Increasing\n"
@@ -68,6 +69,7 @@ public class playmodesScene extends Scene {
         Stage stage = (Stage) incScoreButton.getScene().getWindow();
             gameplayScene.gamemodeInt = 1;
             primaryStage.setScene(gameplayScene.createScene(stage));
+            primaryStage.setFullScreen(true);
     });
 
         Button randomPlayButton = new Button("Random\n"
@@ -81,6 +83,7 @@ public class playmodesScene extends Scene {
             Stage stage = (Stage) randomPlayButton.getScene().getWindow();
             gameplayScene.gamemodeInt = 2;
             primaryStage.setScene(gameplayScene.createScene(stage));
+            primaryStage.setFullScreen(true);
         });
 
         ImageView CUizView1 = new ImageView();
