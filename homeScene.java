@@ -19,8 +19,8 @@ import javafx.stage.Stage;
 
 public class homeScene extends Scene{
 	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 DropShadow dropShadow = new DropShadow();
+    Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+    DropShadow dropShadow = new DropShadow();
 	
 	Insets offset = new Insets(10,10,10,10);
     Label Intro = new Label("Welcome to the quiz! Please Login or Sign up");

@@ -24,8 +24,8 @@ import javafx.util.Duration;
 
 public class loginScene extends Scene{
 	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 DropShadow dropShadow = new DropShadow();
+    Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+    DropShadow dropShadow = new DropShadow();
 	
 	Insets offset = new Insets(10,10,10,10);
     TextField usernameField = new TextField();
@@ -81,7 +81,6 @@ public class loginScene extends Scene{
 
         LoginLay.setConstraints(passwordField, 2, 2);
         passwordField.setPromptText("Password");
-
 
         LoginLay.setConstraints(confirmButton, 2, 3);
         confirmButton.setOnAction(e -> {

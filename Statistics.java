@@ -8,6 +8,7 @@ public class Statistics {
 	public static history[] get_all_history() {
 		return DB_PlayHistory.returnAllHistory();
 	}
+
 	public static int[] history_to_scores(history[] player_history) {
 		int[] scores = new int[player_history.length];
 		for (int i = 0; i < player_history.length; i++) {
@@ -15,6 +16,7 @@ public class Statistics {
 		}
 		return scores;
 	}
+
 	public static void main(String[]args) {
 		//At the end of each round:
 		//- The number of rounds played should increase by 1 (a per user measure, each user has their own)

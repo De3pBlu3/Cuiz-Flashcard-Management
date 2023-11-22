@@ -24,7 +24,6 @@ public class statGUI extends Scene {
     Scene leaderboard;
 
 
-
     public static LineChart<String, Number> create_line_chart_player_history(String user_id) {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Date");

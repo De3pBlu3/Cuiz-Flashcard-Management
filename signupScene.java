@@ -20,14 +20,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.Objects;
-
 
 public class signupScene extends Scene{
 	Background transparentBackground = new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
-	 DropShadow dropShadow = new DropShadow();
+    Background orangeBackground = new Background(new BackgroundFill(Color.rgb(232, 123, 56), CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY));
+    DropShadow dropShadow = new DropShadow();
 	 
 	Insets offset = new Insets(10,10,10,10);
 
